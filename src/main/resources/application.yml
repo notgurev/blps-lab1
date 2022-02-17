@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    # todo profiles
+    url: jdbc:postgresql://pg:5432/studs # pg / localhost
+    username: s286528
+    password:
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+#      ddl-auto: create
+    generate-ddl: true
+    database: postgresql
