@@ -1,5 +1,6 @@
 package foxgurev.blps.order;
 
+import foxgurev.blps.exceptions.NotFoundException;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.InactivePromocodeException;
@@ -39,7 +40,7 @@ public class OrderService {
     }
 
     public void changeStatus(long id, OrderStatus newStatus) {
-        Order order = orderRepository.findById(id).orElse(new Order()); //todo error message
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("The order doesn't exist")); //todo error message
         order.setStatus(newStatus);
         orderRepository.save(order);
     }

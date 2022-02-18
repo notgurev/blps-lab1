@@ -1,5 +1,6 @@
 package foxgurev.blps.promocode;
 
+import foxgurev.blps.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,6 @@ public class PromocodeController {
 
     @GetMapping("/promocode/{code}")
     public Promocode getPromocode(@PathVariable String code) {
-        return promocodeService.getPromocode(code).orElse(null); // todo error message
+        return promocodeService.getPromocode(code).orElseThrow( () -> new NotFoundException("The promocode doesn't exist")); // todo error message
     }
 }

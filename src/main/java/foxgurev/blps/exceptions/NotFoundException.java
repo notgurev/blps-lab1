@@ -1,0 +1,7 @@
+package foxgurev.blps.exceptions;
+
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String msg) {
+        super(msg);
+    }
+}
