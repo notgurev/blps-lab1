@@ -8,4 +8,9 @@ import java.util.List;
 public class OrderCreationRequest {
     List<Long> products; // product ids
     String promocode; // todo validate
+    String name;
+    String surname;
+    String phoneNumber;
+    String email;
+    String city;
 }

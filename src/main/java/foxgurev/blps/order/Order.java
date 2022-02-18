@@ -28,10 +28,31 @@ public class Order {
     @Column
     private Integer totalPrice;
 
-    public Order(OrderStatus status, List<Product> items, Promocode promocode, Integer totalPrice) {
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
+
+    @Column
+    private String phoneNumber;
+
+    @Column
+    private String email;
+
+    @Column
+    private String city;
+
+    public Order(OrderStatus status, List<Product> items, Promocode promocode, Integer totalPrice, String name,
+                 String surname, String phoneNumber, String email, String city) {
         this.status = status;
         this.items = items;
         this.promocode = promocode;
         this.totalPrice = totalPrice;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.city = city;
     }
 }

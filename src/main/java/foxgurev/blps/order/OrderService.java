@@ -33,6 +33,14 @@ public class OrderService {
             throw new RuntimeException("Failed to calculate sum of order");
         });
 
-        orderRepository.save(new Order(OrderStatus.CREATED, items, promocode, sum));
+        orderRepository.save(new Order(OrderStatus.CREATED, items, promocode, sum,
+                orderCreationRequest.name, orderCreationRequest.surname, orderCreationRequest.phoneNumber,
+                orderCreationRequest.email, orderCreationRequest.city));
+    }
+
+    public void changeStatus(long id, OrderStatus newStatus) {
+        Order order = orderRepository.findById(id).orElse(new Order()); //todo error message
+        order.setStatus(newStatus);
+        orderRepository.save(order);
     }
 }
