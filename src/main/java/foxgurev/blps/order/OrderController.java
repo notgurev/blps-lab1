@@ -16,8 +16,8 @@ public class OrderController {
     }
 
     @PostMapping("/order/create")
-    public void createOrder(@RequestBody OrderCreationRequest orderCreationRequest) {
-        orderService.createOrder(orderCreationRequest);
+    public Long createOrder(@RequestBody OrderCreationRequest orderCreationRequest) {
+        return orderService.createOrder(orderCreationRequest);
     }
 
     @PostMapping("/order/pack/{id}")

@@ -30,7 +30,7 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public void createOrder(OrderCreationRequest ocr) {
+    public Long createOrder(OrderCreationRequest ocr) {
         Optional<Promocode> opc = promocodeService.getPromocode(ocr.promocode);
         Promocode promocode = opc.orElseThrow(InactivePromocodeException::new);
 
@@ -41,7 +41,8 @@ public class OrderService {
 
         Order o = new Order(OrderStatus.CREATED, items, promocode, sum,
                 ocr.name, ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
-        orderRepository.save(o);
+        Order saved = orderRepository.save(o);
+        return saved.getId();
     }
 
     public void changeStatus(long id, OrderStatus newStatus) {
