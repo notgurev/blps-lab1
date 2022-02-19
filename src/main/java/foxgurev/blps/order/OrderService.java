@@ -25,18 +25,19 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public void createOrder(OrderCreationRequest orderCreationRequest) {
-        Optional<Promocode> opc = promocodeService.getPromocode(orderCreationRequest.promocode);
+    public void createOrder(OrderCreationRequest ocr) {
+        Optional<Promocode> opc = promocodeService.getPromocode(ocr.promocode);
         Promocode promocode = opc.orElseThrow(InactivePromocodeException::new);
 
-        List<Product> items = productRepository.findAllById(orderCreationRequest.getProducts());
+        List<Product> items = productRepository.findAllById(ocr.getProducts());
         Integer sum = items.stream().map(Product::getPrice).reduce(Integer::sum).orElseThrow(() -> {
             throw new RuntimeException("Failed to calculate sum of order");
-        });
+        }) * (100 - promocode.getDiscount());
 
-        orderRepository.save(new Order(OrderStatus.CREATED, items, promocode, sum,
-                orderCreationRequest.name, orderCreationRequest.surname, orderCreationRequest.phoneNumber,
-                orderCreationRequest.email, orderCreationRequest.city));
+//        System.out.println(ocr);
+        Order o = new Order(OrderStatus.CREATED, items, promocode, sum,
+                ocr.name, ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
+        orderRepository.save(o);
     }
 
     public void changeStatus(long id, OrderStatus newStatus) {
