@@ -1,6 +1,5 @@
 package foxgurev.blps.order;
 
-import foxgurev.blps.Startup;
 import foxgurev.blps.exceptions.NotFoundException;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
@@ -11,11 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional // todo transaction, проверить выкинув ошибку; разобраться какую из аннотаций брать
 public class OrderService {
     private final OrderRepository orderRepository;
     private final PromocodeService promocodeService;
