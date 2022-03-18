@@ -22,7 +22,7 @@ public class OrderController {
 
     @PostMapping("/order/pack/{id}")
     public void packOrder(@PathVariable long id) {
-        deliveryService.addDelivery(id);
+        deliveryService.packOrderAndPrepareDelivery(id);
     }
 
     @PostMapping("/order/ship/{id}")
