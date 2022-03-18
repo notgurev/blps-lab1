@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.configs.properties;
+package se.ifmo.blos.lab2.configs;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

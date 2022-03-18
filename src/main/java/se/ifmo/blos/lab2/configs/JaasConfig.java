@@ -20,7 +20,6 @@ import static javax.security.auth.login.AppConfigurationEntry.LoginModuleControl
 
 @Configuration
 public class JaasConfig {
-
     @Bean
     public javax.security.auth.login.Configuration configuration(
             UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {

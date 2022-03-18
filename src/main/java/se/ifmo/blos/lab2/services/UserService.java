@@ -25,7 +25,7 @@ import static java.lang.String.format;
 @Service("userService")
 @Transactional(
         rollbackFor = {ResourceNotFoundException.class, ResourceAlreadyExistsException.class})
-public class UserService implements CommonService<User, Long, UserDto>, UserDetailsService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -35,7 +35,6 @@ public class UserService implements CommonService<User, Long, UserDto>, UserDeta
         this.userMapper = userMapper;
     }
 
-    @Override
     @Transactional
     public UserDto createFromDto(final UserDto dto) throws ResourceAlreadyExistsException {
         if (isAlreadyExists(dto)) {
@@ -47,33 +46,33 @@ public class UserService implements CommonService<User, Long, UserDto>, UserDeta
         return userMapper.mapToDto(persisted);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public Page<User> getAllEntities(final Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public Page<User> getAllEntities(
             final Specification<User> specification, final Pageable pageable) {
         return userRepository.findAll(specification, pageable);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public Page<UserDto> getAllDtos(final Pageable pageable) {
         return getAllEntities(pageable).map(userMapper::mapToDto);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public Page<UserDto> getAllDtos(
             final Specification<User> specification, final Pageable pageable) {
         return getAllEntities(specification, pageable).map(userMapper::mapToDto);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public User getEntityById(final Long id) throws ResourceNotFoundException {
         return userRepository
@@ -82,13 +81,13 @@ public class UserService implements CommonService<User, Long, UserDto>, UserDeta
                         () -> new ResourceNotFoundException(format("User with id %s was not found.", id)));
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public UserDto getDtoById(final Long id) throws ResourceNotFoundException {
         return userMapper.mapToDto(getEntityById(id));
     }
 
-    @Override
+
     @Transactional
     public UserDto updateFromDto(final UserDto dto, final Long id)
             throws ResourceNotFoundException, IllegalPropertyUpdateException {
@@ -97,14 +96,14 @@ public class UserService implements CommonService<User, Long, UserDto>, UserDeta
         return userMapper.mapToDto(persistable);
     }
 
-    @Override
+
     @Transactional
     public void removeById(final Long id) throws ResourceNotFoundException {
         final var persistable = getEntityById(id);
         userRepository.delete(persistable);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public boolean isAlreadyExists(UserDto dto) {
         return userRepository.existsByEmail(dto.getEmail());

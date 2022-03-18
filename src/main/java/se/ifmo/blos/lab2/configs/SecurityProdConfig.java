@@ -32,7 +32,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SecurityProdConfig extends WebSecurityConfigurerAdapter {
-
     private final UserDetailsService userService;
     private final PasswordEncoder defaultPasswordEncoder;
     private final JwtUtil jwtUtil;

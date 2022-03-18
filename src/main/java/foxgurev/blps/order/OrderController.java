@@ -11,6 +11,10 @@ import java.util.Map;
 
 import static foxgurev.blps.util.MapBuilder.map;
 
+/*
+@PreAuthorize("isAuthenticated() and authentication.principal.id == #userId")
+ */
+
 @RestController
 public class OrderController {
     private final OrderService orderService;

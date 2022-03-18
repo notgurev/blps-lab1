@@ -1,7 +1,5 @@
 package se.ifmo.blos.lab2.configs;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,45 +18,46 @@ import se.ifmo.blos.lab2.filters.JwtTokenAuthErrorHandlingFilter;
 import se.ifmo.blos.lab2.filters.JwtTokenAuthFilter;
 import se.ifmo.blos.lab2.utils.JwtUtil;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 @Configuration
 @Profile("!postgres")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final UserDetailsService userService;
+    private final AbstractJaasAuthenticationProvider jaasAuthenticationProvider;
+    private final JwtUtil jwtUtil;
 
-  private final UserDetailsService userService;
-  private final AbstractJaasAuthenticationProvider jaasAuthenticationProvider;
-  private final JwtUtil jwtUtil;
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
-  @Bean
-  @Override
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
-  }
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        http.addFilterAfter(
+                        new JwtTokenAuthFilter(userService, jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenAuthErrorHandlingFilter(), JwtTokenAuthFilter.class)
+                .csrf()
+                .disable()
+                .sessionManagement()
+                .sessionCreationPolicy(STATELESS)
+                .and()
+                .headers()
+                .frameOptions()
+                .sameOrigin()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/h2-console/**")
+                .permitAll();
+    }
 
-  @Override
-  protected void configure(final HttpSecurity http) throws Exception {
-    http.addFilterAfter(
-            new JwtTokenAuthFilter(userService, jwtUtil),
-            UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(new JwtTokenAuthErrorHandlingFilter(), JwtTokenAuthFilter.class)
-        .csrf()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(STATELESS)
-        .and()
-        .headers()
-        .frameOptions()
-        .sameOrigin()
-        .and()
-        .authorizeRequests()
-        .antMatchers("/h2-console/**")
-        .permitAll();
-  }
-
-  @Override
-  protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-    auth.authenticationProvider(jaasAuthenticationProvider);
-  }
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(jaasAuthenticationProvider);
+    }
 }

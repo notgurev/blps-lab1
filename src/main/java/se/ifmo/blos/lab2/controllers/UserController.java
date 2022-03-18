@@ -18,7 +18,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "/api/v1")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping(path = "/cars/{carId}/owner", produces = APPLICATION_JSON_VALUE)

@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import se.ifmo.blos.lab2.dtos.BrandDto;
 import se.ifmo.blos.lab2.exceptions.ResourceNotFoundException;
-import se.ifmo.blos.lab2.services.BrandService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 

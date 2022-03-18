@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import se.ifmo.blos.lab2.configs.properties.JwtProperties;
+import se.ifmo.blos.lab2.configs.JwtProperties;
 
 import java.security.Key;
 import java.time.Instant;
