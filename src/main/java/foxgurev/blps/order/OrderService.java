@@ -79,7 +79,7 @@ public class OrderService {
             return;
         }
 
-        switch (current.ordinal() - next.ordinal()) {
+        switch (next.ordinal() - current.ordinal()) {
             case 0:
                 throw new BadRequestException("This status is already assigned");
             case 1:
