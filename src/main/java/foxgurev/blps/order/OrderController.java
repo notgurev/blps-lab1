@@ -2,7 +2,14 @@ package foxgurev.blps.order;
 
 import foxgurev.blps.delivery.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+import static foxgurev.blps.util.MapBuilder.map;
 
 @RestController
 public class OrderController {
@@ -16,8 +23,8 @@ public class OrderController {
     }
 
     @PostMapping("/order/create")
-    public Long createOrder(@RequestBody OrderCreationRequest orderCreationRequest) {
-        return orderService.createOrder(orderCreationRequest);
+    public Map<String, Object> createOrder(@RequestBody OrderCreationRequest orderCreationRequest) {
+        return map("message", "order created").put("id", orderService.createOrder(orderCreationRequest)).build();
     }
 
     @PostMapping("/order/pack/{id}")
