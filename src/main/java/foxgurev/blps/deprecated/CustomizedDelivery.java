@@ -1,4 +1,4 @@
-package foxgurev.blps.delivery;
+package foxgurev.blps.deprecated;
 
 import java.time.LocalDateTime;
 import java.util.Date;

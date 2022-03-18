@@ -22,6 +22,7 @@ public class OrderController {
 
     @PostMapping("/order/pack/{id}")
     public void packOrder(@PathVariable long id) {
+        // todo move to service, add transaction
         orderService.changeStatus(id, OrderStatus.PACKED);
         deliveryService.addDelivery(id);
     }

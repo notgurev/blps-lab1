@@ -1,4 +1,4 @@
-package foxgurev.blps.delivery;
+package foxgurev.blps.deprecated;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

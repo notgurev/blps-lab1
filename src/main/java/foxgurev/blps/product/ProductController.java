@@ -24,6 +24,6 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable Long id) {
-        return productService.getProduct(id).orElseThrow( () -> new NotFoundException("The product doesn't exist")); // todo error message
+        return productService.getProduct(id).orElseThrow(() -> new NotFoundException("The product doesn't exist"));
     }
 }

@@ -17,6 +17,6 @@ public class PromocodeController {
 
     @GetMapping("/promocode/{code}")
     public Promocode getPromocode(@PathVariable String code) {
-        return promocodeService.getPromocode(code).orElseThrow( () -> new NotFoundException("The promocode doesn't exist")); // todo error message
+        return promocodeService.getPromocode(code).orElseThrow(() -> new NotFoundException("The promocode doesn't exist"));
     }
 }
