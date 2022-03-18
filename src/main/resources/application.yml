@@ -14,3 +14,7 @@ spring:
       ddl-auto: create
     generate-ddl: true
     database: postgresql
+
+token:
+  jwtSecret: eyJhbGciOiJIUzUxMiIsInR5cCI6ImVld2c0NTNuamtlckdFUmxeJiooM25qc2RpZjtydCJ9
+  jwtExpirationMs: 36000000
