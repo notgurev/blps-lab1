@@ -1,6 +1,5 @@
 package foxgurev.blps;
 
-import foxgurev.blps.order.Order;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.Promocode;
@@ -9,6 +8,7 @@ import foxgurev.blps.promocode.PromocodeStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -21,6 +21,9 @@ public class Startup {
     private final ProductRepository productRepository;
     private final PromocodeRepository promocodeRepository;
 
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     private final Logger logger = LoggerFactory.getLogger(Startup.class);
 
     @Autowired
@@ -32,6 +35,8 @@ public class Startup {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void init() {
+        logger.info("Active profile: " + activeProfile);
+
         if (productRepository.count() > 0) {
             logger.info("Already initialized, skipping adding initial entities");
         }
