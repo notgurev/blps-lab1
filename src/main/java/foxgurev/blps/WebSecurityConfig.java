@@ -1,7 +1,6 @@
 package foxgurev.blps;
 
 import foxgurev.blps.auth.security.jwt.JwtTokenFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +21,10 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan(basePackages = "foxgurev.blps.auth.security*")
+@ComponentScan(basePackages = "foxgurev.blps.auth.security.service")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsServiceImpl;
     private final JwtTokenFilter jwtTokenFilter;
+    private final UserDetailsService userDetailsServiceImpl;
 
     public WebSecurityConfig(UserDetailsService userDetailsServiceImpl, JwtTokenFilter jwtTokenFilter) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
