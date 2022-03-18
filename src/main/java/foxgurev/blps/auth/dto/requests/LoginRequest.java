@@ -1,9 +1,9 @@
-package foxgurev.blps.auth.security.dto;
+package foxgurev.blps.auth.dto.requests;
 
 import lombok.Data;
 
 @Data
 public class LoginRequest {
-    private String userLogin;
+    private String email;
     private String password;
 }

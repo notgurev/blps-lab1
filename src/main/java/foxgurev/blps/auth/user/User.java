@@ -1,47 +1,114 @@
 package foxgurev.blps.auth.user;
 
-import foxgurev.blps.auth.role.Role;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.NaturalId;
+import org.springframework.data.domain.Persistable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
+import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Collections;
 
-@Entity
-@Data
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
+@AllArgsConstructor
+@Builder
+@Slf4j
+//@EqualsAndHashCode(doNotUseGetters = true, onlyExplicitlyIncluded = true)
+@ToString(doNotUseGetters = true)
+public class User implements UserDetails, Persistable<Long> {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column
-    @NotBlank
-    private String userLogin;
-
-    @Column
-    @NotBlank
+    @NaturalId
     @Email
+    @Size(max = 255)
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    @EqualsAndHashCode.Include
     private String email;
 
-    @Column
+    @Size(max = 255)
+    @NotBlank
+    @Column(nullable = false)
+    private String username;
+
+    @Size(max = 255)
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    @Size(max = 63)
+    @NotBlank
+    @Column(nullable = false)
+    private String phoneNumber;
 
-    public User(@NotBlank String userLogin, @NotBlank @Email String email, String password) {
-        this.userLogin = userLogin;
+    @Enumerated(STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public User(@Email @Size(max = 255) @NotBlank String email, @Size(max = 255) @NotBlank String username, @Size(max = 255) @NotBlank String password, @Size(max = 63) @NotBlank String phoneNumber, Role role) {
         this.email = email;
+        this.username = username;
         this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return id == null;
     }
 }
