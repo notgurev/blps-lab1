@@ -40,16 +40,26 @@ public class OrderService {
             throw new RuntimeException("Failed to calculate sum of order");
         }) * (100 - promocode.getDiscount()) / 100;
 
-        Order o = new Order(OrderStatus.CREATED, items, promocode, sum,
-                ocr.name, ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
+        Order o = new Order(OrderStatus.CREATED, items, promocode, sum, ocr.name, ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
         Order saved = orderRepository.save(o);
         return saved.getId();
     }
 
     public void changeStatus(long id, OrderStatus newStatus) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NotFoundException("The order doesn't exist"));
-        if (order.getStatus() == newStatus) throw new RuntimeException("This status is already assigned");
+        checkStatusFlow(order.getStatus(), newStatus);
         order.setStatus(newStatus);
         orderRepository.save(order);
+    }
+
+    private void checkStatusFlow(OrderStatus current, OrderStatus next) {
+        switch (current.ordinal() - next.ordinal()) {
+            case 0:
+                throw new RuntimeException("This status is already assigned");
+            case 1:
+                return;
+            default:
+                throw new RuntimeException("Illegal change of status (" + current.name() + " -> " + next.name() + ")");
+        }
     }
 }
