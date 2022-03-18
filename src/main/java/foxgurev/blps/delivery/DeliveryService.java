@@ -36,7 +36,7 @@ public class DeliveryService {
         return date.plusHours(1);
     }
 
-    public void cancelDelivery(long orderId) { // todo проверить
+    public void cancelDelivery(long orderId) {
         Delivery delivery = deliveryRepository.findByOrderId(orderId).orElseThrow(
                 () -> new BadRequestException("Failed to find delivery for order #" + orderId)
         );

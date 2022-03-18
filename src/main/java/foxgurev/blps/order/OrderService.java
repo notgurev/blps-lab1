@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional // todo transaction, проверить выкинув ошибку; разобраться какую из аннотаций брать
+@Transactional
 public class OrderService {
     private final OrderRepository orderRepository;
     private final PromocodeService promocodeService;
@@ -61,7 +61,6 @@ public class OrderService {
         Order order = findOrder(id);
         checkStatusFlow(order.getStatus(), newStatus);
         order.setStatus(newStatus);
-        orderRepository.save(order);
     }
 
     private Order findOrder(long id) {
@@ -99,7 +98,8 @@ public class OrderService {
                 throw new BadRequestException("Cannot cancel a delivered order");
 
             case SHIPPING:
-                // todo alert shipping company?
+                throw new BadRequestException("Cannot cancel an order in shipping");
+
             case PACKED:
                 deliveryService.cancelDelivery(id);
             case CREATED:
@@ -108,8 +108,7 @@ public class OrderService {
         order.setStatus(OrderStatus.CANCELLED);
     }
 
-    @Transactional
-    public void packOrderAndPrepareDelivery(long orderId) { // todo rename
+    public void packOrderAndOrganizeDelivery(long orderId) {
         changeStatus(orderId, OrderStatus.PACKED);
         LocalDateTime freeDate = deliveryService.selectDeliveryDate();
         deliveryService.addDelivery(new Delivery(orderId, freeDate));

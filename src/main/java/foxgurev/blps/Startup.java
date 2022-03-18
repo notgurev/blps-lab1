@@ -1,5 +1,6 @@
 package foxgurev.blps;
 
+import foxgurev.blps.order.Order;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.Promocode;

@@ -26,7 +26,7 @@ public class OrderController {
 
     @PostMapping("/order/pack/{id}")
     public void packOrder(@PathVariable long id) {
-        orderService.packOrderAndPrepareDelivery(id);
+        orderService.packOrderAndOrganizeDelivery(id);
     }
 
     @PostMapping("/order/ship/{id}")
