@@ -1,6 +1,5 @@
 package foxgurev.blps.exceptions;
 
-import foxgurev.blps.exceptions.BadRequestException;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,8 @@ public class ExceptionHandlerAdvice {
                 .body(new HTTPError("Internal server error"));
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<HTTPError> handleBadRequests(BadRequestException e) {
+    @ExceptionHandler(VisibleException.class)
+    public ResponseEntity<HTTPError> handleBadRequests(VisibleException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new HTTPError(e.getMessage()));

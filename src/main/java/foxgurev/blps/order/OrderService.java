@@ -2,7 +2,7 @@ package foxgurev.blps.order;
 
 import foxgurev.blps.delivery.Delivery;
 import foxgurev.blps.delivery.DeliveryService;
-import foxgurev.blps.exceptions.BadRequestException;
+import foxgurev.blps.exceptions.VisibleException;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.product.ProductService;
@@ -65,13 +65,13 @@ public class OrderService {
 
     private Order findOrder(long id) {
         return orderRepository.findById(id).orElseThrow(
-                () -> new BadRequestException("Order (id = " + id + ") doesn't exist")
+                () -> new VisibleException("Order (id = " + id + ") doesn't exist")
         );
     }
 
     private void checkStatusFlow(OrderStatus current, OrderStatus next) {
         if (current == OrderStatus.CANCELLED) {
-            throw new BadRequestException("Changing status of cancelled order is not allowed");
+            throw new VisibleException("Changing status of cancelled order is not allowed");
         }
 
         if (next == OrderStatus.CANCELLED) {
@@ -80,11 +80,11 @@ public class OrderService {
 
         switch (next.ordinal() - current.ordinal()) {
             case 0:
-                throw new BadRequestException("This status is already assigned");
+                throw new VisibleException("This status is already assigned");
             case 1:
                 return;
             default:
-                throw new BadRequestException("Illegal change of status (" + current.name() + " -> " + next.name() + ")");
+                throw new VisibleException("Illegal change of status (" + current.name() + " -> " + next.name() + ")");
         }
     }
 
@@ -93,12 +93,12 @@ public class OrderService {
         switch (order.getStatus()) {
 
             case CANCELLED:
-                throw new BadRequestException("This order is already cancelled");
+                throw new VisibleException("This order is already cancelled");
             case DELIVERED:
-                throw new BadRequestException("Cannot cancel a delivered order");
+                throw new VisibleException("Cannot cancel a delivered order");
 
             case SHIPPING:
-                throw new BadRequestException("Cannot cancel an order in shipping");
+                throw new VisibleException("Cannot cancel an order in shipping");
 
             case PACKED:
                 deliveryService.cancelDelivery(id);

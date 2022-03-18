@@ -1,6 +1,6 @@
 package foxgurev.blps.product;
 
-import foxgurev.blps.exceptions.BadRequestException;
+import foxgurev.blps.exceptions.VisibleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +24,6 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable Long id) {
-        return productService.getProduct(id).orElseThrow(() -> new BadRequestException("The product doesn't exist"));
+        return productService.getProduct(id).orElseThrow(() -> new VisibleException("The product doesn't exist"));
     }
 }

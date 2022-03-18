@@ -1,6 +1,6 @@
 package foxgurev.blps.promocode;
 
-import foxgurev.blps.exceptions.BadRequestException;
+import foxgurev.blps.exceptions.VisibleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,6 @@ public class PromocodeController {
 
     @GetMapping("/promocode/{code}")
     public Promocode getPromocode(@PathVariable String code) {
-        return promocodeService.getPromocode(code).orElseThrow(() -> new BadRequestException("The promocode doesn't exist"));
+        return promocodeService.getPromocode(code).orElseThrow(() -> new VisibleException("The promocode doesn't exist"));
     }
 }

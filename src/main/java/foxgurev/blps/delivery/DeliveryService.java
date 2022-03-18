@@ -1,6 +1,6 @@
 package foxgurev.blps.delivery;
 
-import foxgurev.blps.exceptions.BadRequestException;
+import foxgurev.blps.exceptions.VisibleException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +38,7 @@ public class DeliveryService {
 
     public void cancelDelivery(long orderId) {
         Delivery delivery = deliveryRepository.findByOrderId(orderId).orElseThrow(
-                () -> new BadRequestException("Failed to find delivery for order #" + orderId)
+                () -> new VisibleException("Failed to find delivery for order #" + orderId)
         );
         deliveryRepository.delete(delivery);
     }
