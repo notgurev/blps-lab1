@@ -1,7 +1,8 @@
 spring:
   datasource:
     # todo profiles
-    url: jdbc:postgresql://pg:5432/studs # pg / localhost
+#    url: jdbc:postgresql://pg:5432/studs # helios
+    url: jdbc:postgresql://localhost:5432/studs # local with "make helios"
     username: s286528
     password:
     driverClassName: org.postgresql.Driver
