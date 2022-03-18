@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Data
 @RequiredArgsConstructor
 public class JwtProperties {
-  private final String authoritiesClaim;
-  private final String secret;
-  private final int expirationHours;
+    private final String authoritiesClaim;
+    private final String secret;
+    private final int expirationHours;
 }

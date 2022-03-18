@@ -19,7 +19,7 @@ public class AuthorizationService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public AuthorizationDto authorize(final AuthorizationDto authorizationDto)
             throws UnauthorizedException {
         final var authentication =

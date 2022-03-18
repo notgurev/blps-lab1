@@ -25,11 +25,8 @@ public class UserDetailsLoginModule implements LoginModule {
     private boolean loginSucceeded;
 
     @Override
-    public void initialize(
-            Subject subject,
-            CallbackHandler callbackHandler,
-            Map<String, ?> sharedState,
-            Map<String, ?> options) {
+    public void initialize(Subject subject, CallbackHandler callbackHandler,
+                           Map<String, ?> sharedState, Map<String, ?> options) {
         this.subject = subject;
         this.callbackHandler = callbackHandler;
         this.userDetailsService = (UserDetailsService) options.get("userDetailsService");

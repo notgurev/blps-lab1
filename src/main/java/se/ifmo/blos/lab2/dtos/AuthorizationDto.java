@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import se.ifmo.blos.lab2.domains.Role;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.Instant;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
@@ -21,8 +22,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AuthorizationDto implements Dto {
-
+public class AuthorizationDto implements Serializable {
     @JsonProperty(access = READ_ONLY)
     @JsonInclude(NON_NULL)
     private Long id;

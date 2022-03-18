@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.time.temporal.ChronoUnit.HOURS;
-
 @Component
 @Slf4j
 public class JwtUtil {
@@ -39,7 +37,6 @@ public class JwtUtil {
     public String generateJwtToken(Authentication authentication) {
         var username = authentication.getName();
         var issueDate = Instant.now();
-        var expirationDate = issueDate.plus(jwtProperties.getExpirationHours(), HOURS);
 
         var claim = new ArrayList<>();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
@@ -52,11 +49,8 @@ public class JwtUtil {
                         .setSubject(username)
                         .claim(jwtProperties.getAuthoritiesClaim(), claim)
                         .setIssuedAt(Date.from(issueDate))
-                        .setExpiration(Date.from(expirationDate))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact();
-
-        log.info("Generated JWT token for user={} with expirationDate={}", username, expirationDate);
 
         return jwtToken;
     }
