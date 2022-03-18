@@ -2,6 +2,7 @@ package se.ifmo.blos.lab2.filters;
 
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.lang.NonNull;
@@ -14,10 +15,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import se.ifmo.blos.lab2.utils.JwtUtil;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,14 +28,14 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
     @Override
+    @SneakyThrows
     protected void doFilterInternal(
-            final HttpServletRequest request,
-            final @NonNull HttpServletResponse response,
-            final @NonNull FilterChain filterChain)
-            throws ServletException, IOException {
+            HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) {
         final String authHeader = request.getHeader(AUTHORIZATION_HEADER);
 
-        if (authHeader == null || authHeader.isEmpty() || !authHeader.startsWith(BEARER_TOKEN_PREFIX)) {
+        if (authHeader == null || !authHeader.startsWith(BEARER_TOKEN_PREFIX)) {
             log.debug("Caught unauthorized request for URL={}", request.getRequestURL().toString());
             filterChain.doFilter(request, response);
             return;
