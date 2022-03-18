@@ -16,7 +16,7 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return productRepository.findTop10();
     }
 
     public Optional<Product> getProduct(Long id) {
