@@ -7,4 +7,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface PersistableRepository<T extends Persistable<ID>, ID>
-    extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {}
+        extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+}

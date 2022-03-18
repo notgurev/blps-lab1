@@ -1,8 +1,5 @@
 package se.ifmo.blos.lab2.controllers;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,16 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 import se.ifmo.blos.lab2.dtos.UserDto;
 import se.ifmo.blos.lab2.services.UserService;
 
+import java.util.UUID;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping(path = "/api/v1")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @GetMapping(path = "/cars/{carId}/owner", produces = APPLICATION_JSON_VALUE)
-  @PreAuthorize("isAuthenticated()")
-  public UserDto exposeOwnerData(final @PathVariable UUID carId) {
-    return userService.getByOwnedCarId(carId);
-  }
+    @GetMapping(path = "/cars/{carId}/owner", produces = APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
+    public UserDto exposeOwnerData(final @PathVariable UUID carId) {
+        return userService.getByOwnedCarId(carId);
+    }
 }

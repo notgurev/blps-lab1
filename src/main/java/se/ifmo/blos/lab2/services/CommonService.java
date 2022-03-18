@@ -11,24 +11,24 @@ import se.ifmo.blos.lab2.exceptions.ResourceNotFoundException;
 
 interface CommonService<V extends Persistable<K>, K, D extends Dto> {
 
-  D createFromDto(final D dto) throws ResourceAlreadyExistsException;
+    D createFromDto(final D dto) throws ResourceAlreadyExistsException;
 
-  Page<V> getAllEntities(final Pageable pageable);
+    Page<V> getAllEntities(final Pageable pageable);
 
-  Page<V> getAllEntities(final Specification<V> specification, final Pageable pageable);
+    Page<V> getAllEntities(final Specification<V> specification, final Pageable pageable);
 
-  Page<D> getAllDtos(final Pageable pageable);
+    Page<D> getAllDtos(final Pageable pageable);
 
-  Page<D> getAllDtos(final Specification<V> specification, final Pageable pageable);
+    Page<D> getAllDtos(final Specification<V> specification, final Pageable pageable);
 
-  V getEntityById(final K id) throws ResourceNotFoundException;
+    V getEntityById(final K id) throws ResourceNotFoundException;
 
-  D getDtoById(final K id) throws ResourceNotFoundException;
+    D getDtoById(final K id) throws ResourceNotFoundException;
 
-  D updateFromDto(final D dto, final K id)
-      throws ResourceNotFoundException, IllegalPropertyUpdateException;
+    D updateFromDto(final D dto, final K id)
+            throws ResourceNotFoundException, IllegalPropertyUpdateException;
 
-  void removeById(final K id) throws ResourceNotFoundException;
+    void removeById(final K id) throws ResourceNotFoundException;
 
-  boolean isAlreadyExists(final D dto);
+    boolean isAlreadyExists(final D dto);
 }

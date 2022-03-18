@@ -1,9 +1,7 @@
 package se.ifmo.blos.lab2.configs;
 
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +22,10 @@ import se.ifmo.blos.lab2.filters.JwtTokenAuthErrorHandlingFilter;
 import se.ifmo.blos.lab2.filters.JwtTokenAuthFilter;
 import se.ifmo.blos.lab2.utils.JwtUtil;
 
+import java.util.List;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 @Configuration
 @Profile("postgres")
 @EnableWebSecurity
@@ -31,48 +33,48 @@ import se.ifmo.blos.lab2.utils.JwtUtil;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SecurityProdConfig extends WebSecurityConfigurerAdapter {
 
-  private final UserDetailsService userService;
-  private final PasswordEncoder defaultPasswordEncoder;
-  private final JwtUtil jwtUtil;
+    private final UserDetailsService userService;
+    private final PasswordEncoder defaultPasswordEncoder;
+    private final JwtUtil jwtUtil;
 
-  @Bean
-  @Override
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
-  }
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
-  @Bean
-  public CorsConfigurationSource corsConfigurationSource() {
-    final var corsConfiguration = new CorsConfiguration();
-    corsConfiguration.setAllowedOrigins(List.of("*"));
-    corsConfiguration.setAllowedMethods(
-        List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"));
-    corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Access"));
-    final var urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-    urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-    return urlBasedCorsConfigurationSource;
-  }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final var corsConfiguration = new CorsConfiguration();
+        corsConfiguration.setAllowedOrigins(List.of("*"));
+        corsConfiguration.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"));
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Access"));
+        final var urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
+    }
 
-  @Override
-  protected void configure(final HttpSecurity http) throws Exception {
-    http.addFilterAfter(
-            new JwtTokenAuthFilter(userService, jwtUtil),
-            UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(new JwtTokenAuthErrorHandlingFilter(), JwtTokenAuthFilter.class)
-        .csrf()
-        .disable()
-        .sessionManagement()
-        .sessionCreationPolicy(STATELESS)
-        .and()
-        .cors()
-        .and()
-        .headers()
-        .frameOptions()
-        .sameOrigin();
-  }
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        http.addFilterAfter(
+                        new JwtTokenAuthFilter(userService, jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenAuthErrorHandlingFilter(), JwtTokenAuthFilter.class)
+                .csrf()
+                .disable()
+                .sessionManagement()
+                .sessionCreationPolicy(STATELESS)
+                .and()
+                .cors()
+                .and()
+                .headers()
+                .frameOptions()
+                .sameOrigin();
+    }
 
-  @Override
-  protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userService).passwordEncoder(defaultPasswordEncoder);
-  }
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(defaultPasswordEncoder);
+    }
 }

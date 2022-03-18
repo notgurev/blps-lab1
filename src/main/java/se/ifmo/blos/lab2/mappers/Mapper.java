@@ -8,11 +8,10 @@ import se.ifmo.blos.lab2.exceptions.IllegalPropertyUpdateException;
 
 @Component
 public interface Mapper<T extends Persistable<?>, D extends Dto> {
+    T mapToPersistable(final D dto) throws IllegalMappingOperationException;
 
-  T mapToPersistable(final D dto) throws IllegalMappingOperationException;
+    D mapToDto(final T persistable) throws IllegalMappingOperationException;
 
-  D mapToDto(final T persistable) throws IllegalMappingOperationException;
-
-  void updateFromDto(final D dto, final T persistable)
-      throws IllegalMappingOperationException, IllegalPropertyUpdateException;
+    void updateFromDto(final D dto, final T persistable)
+            throws IllegalMappingOperationException, IllegalPropertyUpdateException;
 }

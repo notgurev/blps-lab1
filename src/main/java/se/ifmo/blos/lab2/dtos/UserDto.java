@@ -1,27 +1,23 @@
 package se.ifmo.blos.lab2.dtos;
 
-import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serial;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import se.ifmo.blos.lab2.domains.Role;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto implements Dto {
+    @JsonProperty(access = READ_ONLY)
+    private String email;
 
-  @Serial private static final long serialVersionUID = 8870747020716633775L;
+    @JsonProperty(access = READ_ONLY)
+    private String phoneNumber;
 
-  @JsonProperty(access = READ_ONLY)
-  private String email;
-
-  @JsonProperty(access = READ_ONLY)
-  private String phoneNumber;
-
-  @JsonProperty(access = READ_ONLY)
-  private Role role;
+    @JsonProperty(access = READ_ONLY)
+    private Role role;
 }

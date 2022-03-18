@@ -1,25 +1,22 @@
 package se.ifmo.blos.lab2.dtos;
 
-import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.io.Serial;
-import java.time.Instant;
 import lombok.Value;
+
+import java.time.Instant;
+
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
 @Value(staticConstructor = "of")
 public class RestErrorResponse implements Dto {
+    @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSXXX", timezone = "UTC")
+    Instant timestamp;
 
-  @Serial private static final long serialVersionUID = 90721569605570362L;
+    int status;
 
-  @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSXXX", timezone = "UTC")
-  Instant timestamp;
+    String error;
 
-  int status;
+    String message;
 
-  String error;
-
-  String message;
-
-  String requestUrl;
+    String requestUrl;
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.var;
 import org.springframework.lang.NonNull;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -26,8 +27,7 @@ public enum GearboxType implements Serializable {
 
   @NonNull
   @JsonCreator
-  public static GearboxType forName(final @NonNull String gearboxType)
-      throws IllegalArgumentException {
+  public static GearboxType forName(final @NonNull String gearboxType) throws IllegalArgumentException {
     for (final var type : values()) {
       if (type.getName().equalsIgnoreCase(gearboxType.trim())) {
         return type;
