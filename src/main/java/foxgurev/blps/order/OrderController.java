@@ -1,6 +1,5 @@
 package foxgurev.blps.order;
 
-import foxgurev.blps.delivery.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +13,10 @@ import static foxgurev.blps.util.MapBuilder.map;
 @RestController
 public class OrderController {
     private final OrderService orderService;
-    private final DeliveryService deliveryService;
 
     @Autowired
-    public OrderController(OrderService orderService, DeliveryService deliveryService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.deliveryService = deliveryService;
     }
 
     @PostMapping("/order/create")
