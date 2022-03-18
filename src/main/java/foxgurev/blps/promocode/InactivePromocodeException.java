@@ -1,4 +1,12 @@
 package foxgurev.blps.promocode;
 
-public class InactivePromocodeException extends RuntimeException {
+import foxgurev.blps.exceptions.BadRequestException;
+
+public class InactivePromocodeException extends BadRequestException {
+    public InactivePromocodeException(String message) {
+        super(message);
+    }
+
+    public InactivePromocodeException() {
+    }
 }
