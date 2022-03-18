@@ -4,13 +4,13 @@ spring:
 #    url: jdbc:postgresql://pg:5432/studs # helios
     url: jdbc:postgresql://localhost:5432/studs # local with "make helios"
     username: s286528
-    password:
+    password: npe290
     driverClassName: org.postgresql.Driver
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
-#      ddl-auto: create
+#      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
     database: postgresql
