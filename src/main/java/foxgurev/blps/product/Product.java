@@ -30,4 +30,9 @@ public class Product {
         this.price = price;
         this.inStock = inStock;
     }
+
+    public void changeAmountInStock(int delta) {
+        if (inStock == 0) throw new RuntimeException("No amount of product left in stock");
+        inStock += delta;
+    }
 }

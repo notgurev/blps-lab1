@@ -22,4 +22,8 @@ public class ProductService {
     public Optional<Product> getProduct(Long id) {
         return productRepository.findById(id);
     }
+
+    public void decStock(Long id) {
+
+    }
 }

@@ -35,19 +35,23 @@ public class OrderService {
         Optional<Promocode> opc = promocodeService.getPromocode(ocr.promocode);
         Promocode promocode = opc.orElseThrow(InactivePromocodeException::new);
 
-        List<Product> items = productRepository.findAllById(ocr.getProducts());
-        Integer sum = items.stream().map(Product::getPrice).reduce(Integer::sum).orElseThrow(() -> {
+        List<Product> products = productRepository.findAllById(ocr.getProducts());
+
+        products.forEach(p -> p.changeAmountInStock(-1));
+
+        Integer sum = products.stream().map(Product::getPrice).reduce(Integer::sum).orElseThrow(() -> {
             throw new RuntimeException("Failed to calculate sum of order");
         }) * (100 - promocode.getDiscount()) / 100;
 
-        Order o = new Order(OrderStatus.CREATED, items, promocode, sum, ocr.name, ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
+        Order o = new Order(OrderStatus.CREATED, products, promocode, sum, ocr.name,
+                ocr.surname, ocr.phoneNumber, ocr.email, ocr.city);
         Order saved = orderRepository.save(o);
         return saved.getId();
     }
 
     public void changeStatus(long id, OrderStatus newStatus) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new BadRequestException("The order doesn't exist"));
-        checkStatusFlow(order.getStatus(), newStatus);
+        checkStatusFlow(order.getStatus(), newStatus); // todo special check on cancel
         order.setStatus(newStatus);
         orderRepository.save(order);
     }
