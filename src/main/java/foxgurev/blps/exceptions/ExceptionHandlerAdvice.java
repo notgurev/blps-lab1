@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
-    // todo profiles
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<HTTPError> handleInternalErrors(Exception e) {
         return ResponseEntity
