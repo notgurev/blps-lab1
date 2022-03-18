@@ -22,7 +22,7 @@ public class OrderController {
 
     @PostMapping("/order/pack/{id}")
     public void packOrder(@PathVariable long id) {
-        deliveryService.packOrderAndPrepareDelivery(id);
+        orderService.packOrderAndPrepareDelivery(id);
     }
 
     @PostMapping("/order/ship/{id}")
@@ -33,5 +33,10 @@ public class OrderController {
     @PostMapping("/order/delivered/{id}")
     public void deliveredOrder(@PathVariable long id) {
         orderService.changeStatus(id, OrderStatus.DELIVERED);
+    }
+
+    @PostMapping("/order/cancel/{id}")
+    public void cancelOrder(@PathVariable long id) {
+        orderService.cancelOrder(id);
     }
 }

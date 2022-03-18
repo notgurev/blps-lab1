@@ -23,7 +23,8 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public void decStock(Long id) {
-
+    public void returnToStock(List<Product> items) {
+        items.forEach(product -> product.changeAmountInStock(+1));
+        productRepository.saveAll(items);
     }
 }

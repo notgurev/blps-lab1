@@ -18,13 +18,13 @@ public class Delivery {
     private long id;
 
     @Column
-    private long order_id;
+    private long orderId;
 
     @Column
     private LocalDateTime date;
 
     public Delivery(long order_id, LocalDateTime date) {
-        this.order_id = order_id;
+        this.orderId = order_id;
         this.date = date;
     }
 }
