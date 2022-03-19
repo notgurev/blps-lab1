@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.filters;
+package foxgurev.blps.auth.theirs;
 
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
-import se.ifmo.blos.lab2.utils.JwtUtil;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;

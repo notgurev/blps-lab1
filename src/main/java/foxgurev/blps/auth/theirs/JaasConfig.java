@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.configs;
+package foxgurev.blps.auth.theirs;
 
 import lombok.var;
 import org.springframework.context.annotation.Bean;
@@ -9,9 +9,6 @@ import org.springframework.security.authentication.jaas.DefaultJaasAuthenticatio
 import org.springframework.security.authentication.jaas.memory.InMemoryConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import se.ifmo.blos.lab2.repositories.UserRepository;
-import se.ifmo.blos.lab2.security.UserDetailsLoginModule;
-import se.ifmo.blos.lab2.security.UserRepositoryAuthorityGranter;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import java.util.Map;

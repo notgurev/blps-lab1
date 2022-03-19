@@ -1,10 +1,9 @@
-package se.ifmo.blos.lab2.security;
+package foxgurev.blps.auth.theirs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
-import se.ifmo.blos.lab2.repositories.UserRepository;
 
 import java.security.Principal;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.dtos;
+package foxgurev.blps.auth.theirs;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se.ifmo.blos.lab2.domains.Role;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.domains;
+package foxgurev.blps.auth.theirs;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;

@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.security;
+package foxgurev.blps.auth.theirs;
 
 import com.sun.security.auth.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;

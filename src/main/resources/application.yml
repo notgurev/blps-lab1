@@ -16,5 +16,5 @@ spring:
     database: postgresql
 
 token:
-  jwtSecret: ja5XKcJV478PZ7z91_ILt0EYlHieM4clnK_zwW1ZdKw
+  jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw
   jwtExpirationMs: 36000000

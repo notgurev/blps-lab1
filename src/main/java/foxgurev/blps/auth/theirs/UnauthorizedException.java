@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.exceptions;
+package foxgurev.blps.auth.theirs;
 
 public class UnauthorizedException extends Exception {
     public UnauthorizedException(final String message) {

@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.configs;
+package foxgurev.blps.auth.theirs;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

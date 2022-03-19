@@ -1,16 +1,13 @@
-package se.ifmo.blos.lab2.services;
+package foxgurev.blps.auth.theirs;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.ifmo.blos.lab2.dtos.AuthorizationDto;
-import se.ifmo.blos.lab2.exceptions.UnauthorizedException;
-import se.ifmo.blos.lab2.repositories.UserRepository;
-import se.ifmo.blos.lab2.utils.JwtUtil;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -20,17 +17,17 @@ public class AuthorizationService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public AuthorizationDto authorize(final AuthorizationDto authorizationDto)
-            throws UnauthorizedException {
-        final var authentication =
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                authorizationDto.getUsername(), authorizationDto.getPassword()));
+    @SneakyThrows
+    public AuthorizationDto authorize(final AuthorizationDto authorizationDto) {
+        var authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                        authorizationDto.getUsername(), authorizationDto.getPassword())
+                );
         if (!authentication.isAuthenticated()) {
             throw new UnauthorizedException("Bad credentials");
         }
-        final String token = jwtUtil.generateJwtToken(authentication);
-        final var user = userRepository.findByEmail(authentication.getName()).get();
+        String token = jwtUtil.generateJwtToken(authentication);
+        var user = userRepository.findByEmail(authentication.getName()).get();
         authorizationDto.setId(user.getId());
         authorizationDto.setToken(token);
         authorizationDto.setRole(user.getRole());

@@ -1,16 +1,16 @@
-package se.ifmo.blos.lab2.configs;
+package foxgurev.blps.auth.theirs;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(prefix = "application.jwt")
+@ConfigurationProperties(prefix = "token")
 @ConstructorBinding
 @Data
 @RequiredArgsConstructor
 public class JwtProperties {
     private final String authoritiesClaim;
-    private final String secret;
+    private final String jwtSecret;
     private final int expirationHours;
 }

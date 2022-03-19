@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.utils;
+package foxgurev.blps.auth.theirs;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import se.ifmo.blos.lab2.configs.JwtProperties;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.time.Instant;
@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @Slf4j
 public class JwtUtil {
     private final JwtProperties jwtProperties;
@@ -31,7 +31,7 @@ public class JwtUtil {
     @Autowired
     public JwtUtil(final JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
-        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getSecret()));
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getJwtSecret()));
     }
 
     public String generateJwtToken(Authentication authentication) {

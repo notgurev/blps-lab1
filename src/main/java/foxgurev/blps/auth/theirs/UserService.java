@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.services;
+package foxgurev.blps.auth.theirs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import se.ifmo.blos.lab2.repositories.UserRepository;
 
 import static java.lang.String.format;
 

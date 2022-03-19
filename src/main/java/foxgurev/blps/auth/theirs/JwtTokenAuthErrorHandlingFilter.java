@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.filters;
+package foxgurev.blps.auth.theirs;
 
 import io.jsonwebtoken.JwtException;
 import lombok.SneakyThrows;

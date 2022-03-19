@@ -1,5 +1,7 @@
 package foxgurev.blps.auth;
 
+import foxgurev.blps.auth.theirs.AuthorizationDto;
+import foxgurev.blps.auth.theirs.AuthorizationService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import se.ifmo.blos.lab2.dtos.AuthorizationDto;
-import se.ifmo.blos.lab2.services.AuthorizationService;
 
 import javax.validation.Valid;
 

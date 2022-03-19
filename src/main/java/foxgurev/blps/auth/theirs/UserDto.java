@@ -1,9 +1,8 @@
-package se.ifmo.blos.lab2.dtos;
+package foxgurev.blps.auth.theirs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import se.ifmo.blos.lab2.domains.Role;
 
 import java.io.Serializable;
 

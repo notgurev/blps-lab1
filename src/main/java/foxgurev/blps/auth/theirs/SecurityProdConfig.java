@@ -1,4 +1,4 @@
-package se.ifmo.blos.lab2.configs;
+package foxgurev.blps.auth.theirs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.var;
@@ -17,9 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import se.ifmo.blos.lab2.filters.JwtTokenAuthErrorHandlingFilter;
-import se.ifmo.blos.lab2.filters.JwtTokenAuthFilter;
-import se.ifmo.blos.lab2.utils.JwtUtil;
 
 import java.util.List;
 

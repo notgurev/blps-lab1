@@ -1,10 +1,8 @@
-package se.ifmo.blos.lab2.repositories;
+package foxgurev.blps.auth.theirs;
 
 import lombok.var;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import se.ifmo.blos.lab2.domains.Role;
-import se.ifmo.blos.lab2.domains.User;
 
 import java.util.Optional;
 
