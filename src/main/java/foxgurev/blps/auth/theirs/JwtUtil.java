@@ -26,17 +26,18 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JwtUtil {
     private final JwtProperties jwtProperties;
-    private final Key secretKey;
+    private final String secretKey;
 
     @Autowired
     public JwtUtil(final JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
-        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getJwtSecret()));
+        this.secretKey = "ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw";
     }
 
     public String generateJwtToken(Authentication authentication) {
         var username = authentication.getName();
         var issueDate = Instant.now();
+
 
         var claim = new ArrayList<>();
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {

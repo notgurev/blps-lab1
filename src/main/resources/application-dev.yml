@@ -1,1 +1,1 @@
-spring.datasource.url: jdbc:postgresql://localhost:5432/studs # local with "make helios"
+spring.datasource.url: jdbc:postgresql://localhost:8081/studs # local with "make helios"
