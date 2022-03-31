@@ -1,20 +1,19 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import lombok.var;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class JwtUtil {
+    private final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
     private final JwtProperties jwtProperties;
     private final String secretKey;
 
@@ -35,7 +35,7 @@ public class JwtUtil {
     }
 
     public String generateJwtToken(Authentication authentication) {
-        var username = authentication.getName();
+        UserDetails username = (UserDetails) authentication.getPrincipal();
         var issueDate = Instant.now();
 
 
@@ -47,12 +47,12 @@ public class JwtUtil {
 
         final String jwtToken =
                 Jwts.builder()
-                        .setSubject(username)
+                        .setSubject(username.getUsername())
                         .claim(jwtProperties.getAuthoritiesClaim(), claim)
                         .setIssuedAt(Date.from(issueDate))
                         .signWith(SignatureAlgorithm.HS256, secretKey)
                         .compact();
-
+        logger.info("Token: " + jwtToken);
         return jwtToken;
     }
 

@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.jwt;
 
 import io.jsonwebtoken.JwtException;
 import lombok.SneakyThrows;

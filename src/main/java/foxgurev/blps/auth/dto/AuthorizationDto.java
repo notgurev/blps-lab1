@@ -1,8 +1,9 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import foxgurev.blps.auth.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,16 @@ public class AuthorizationDto implements Serializable {
     @JsonProperty(access = WRITE_ONLY)
     @JsonInclude(NON_NULL)
     private String username;
+
+    @NotBlank
+    @JsonProperty(access = WRITE_ONLY)
+    @JsonInclude(NON_NULL)
+    private String email;
+
+    @NotBlank
+    @JsonProperty(access = WRITE_ONLY)
+    @JsonInclude(NON_NULL)
+    private String phoneNumber;
 
     @NotBlank
     @JsonProperty(access = WRITE_ONLY)

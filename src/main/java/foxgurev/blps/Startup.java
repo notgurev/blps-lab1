@@ -1,5 +1,8 @@
 package foxgurev.blps;
 
+import foxgurev.blps.auth.user.Role;
+import foxgurev.blps.auth.user.User;
+import foxgurev.blps.auth.user.UserRepository;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.Promocode;
@@ -20,6 +23,7 @@ import java.util.Arrays;
 public class Startup {
     private final ProductRepository productRepository;
     private final PromocodeRepository promocodeRepository;
+    private final UserRepository userRepository;
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
@@ -27,9 +31,10 @@ public class Startup {
     private final Logger logger = LoggerFactory.getLogger(Startup.class);
 
     @Autowired
-    public Startup(ProductRepository productRepository, PromocodeRepository promocodeRepository) {
+    public Startup(ProductRepository productRepository, PromocodeRepository promocodeRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.promocodeRepository = promocodeRepository;
+        this.userRepository = userRepository;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -51,5 +56,9 @@ public class Startup {
                 new Promocode("GORBUNOV", 50, PromocodeStatus.ACTIVE),
                 new Promocode("USKOV", 50, PromocodeStatus.INACTIVE)
         ));
+
+        userRepository.saveAll( Arrays.asList(
+            new User("user@sd.com", "username", "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
+                    "89023457654", Role.ROLE_USER)));
     }
 }

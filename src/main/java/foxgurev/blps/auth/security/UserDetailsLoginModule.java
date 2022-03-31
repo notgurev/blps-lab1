@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.security;
 
 import com.sun.security.auth.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ public class UserDetailsLoginModule implements LoginModule {
 
     @Override
     public boolean login() {
-        final var nameCallback = new NameCallback("email");
+        final var nameCallback = new NameCallback("username");
         final var passwordCallback = new PasswordCallback("password", false);
         try {
             callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});

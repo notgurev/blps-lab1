@@ -1,7 +1,6 @@
 package foxgurev.blps.auth;
 
-import foxgurev.blps.auth.theirs.AuthorizationDto;
-import foxgurev.blps.auth.theirs.AuthorizationService;
+import foxgurev.blps.auth.dto.AuthorizationDto;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,14 @@ public class AuthController {
     @PostMapping(path = "/login")
     @PreAuthorize("permitAll()")
     @SneakyThrows
-    public AuthorizationDto authorize(@RequestBody @Valid AuthorizationDto authorizationDto) {
-        return authorizationService.authorize(authorizationDto);
+    public AuthorizationDto signIn(@RequestBody @Valid AuthorizationDto authorizationDto) {
+        return authorizationService.signIn(authorizationDto);
     }
+
+  @PostMapping(path = "/signup")
+  @PreAuthorize("permitAll()")
+  @SneakyThrows
+  public AuthorizationDto signUp(@RequestBody @Valid AuthorizationDto authorizationDto) {
+        return authorizationService.signUp(authorizationDto);
+  }
 }

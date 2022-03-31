@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.jwt;
 
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +33,9 @@ public class JwtTokenAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) {
         final String authHeader = request.getHeader(AUTHORIZATION_HEADER);
-
+        log.info("Header: " + request.getHeader(AUTHORIZATION_HEADER));
         if (authHeader == null || !authHeader.startsWith(BEARER_TOKEN_PREFIX)) {
-            log.debug("Caught unauthorized request for URL={}", request.getRequestURL().toString());
+            log.warn("Caught unauthorized request for URL={}", request.getRequestURL().toString());
             filterChain.doFilter(request, response);
             return;
         }

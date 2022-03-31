@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.user;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -40,6 +40,11 @@ public class User implements UserDetails, Persistable<Long> {
     @Size(max = 255)
     @NotBlank
     @Column(nullable = false)
+    private String username;
+
+    @Size(max = 255)
+    @NotBlank
+    @Column(nullable = false)
     private String password;
 
     @Size(max = 63)
@@ -50,6 +55,14 @@ public class User implements UserDetails, Persistable<Long> {
     @Enumerated(STRING)
     @Column(nullable = false)
     private Role role;
+
+    public User(@Email @Size(max = 255) @NotBlank String email, @Size(max = 255) @NotBlank String username, @Size(max = 255) @NotBlank String password, @Size(max = 63) @NotBlank String phoneNumber, Role role) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

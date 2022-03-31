@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,6 @@ import static org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.B
 public class PasswordEncoderConfig {
     @Bean
     public PasswordEncoder defaultPasswordEncoder() {
-        return new BCryptPasswordEncoder($2B, 12);
+        return new BCryptPasswordEncoder();
     }
 }

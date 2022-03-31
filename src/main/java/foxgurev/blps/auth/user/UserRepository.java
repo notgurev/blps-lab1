@@ -1,4 +1,4 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.user;
 
 import lombok.var;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,5 +1,6 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.security;
 
+import foxgurev.blps.auth.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;

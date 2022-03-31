@@ -1,5 +1,8 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.configure;
 
+import foxgurev.blps.auth.jwt.JwtTokenAuthErrorHandlingFilter;
+import foxgurev.blps.auth.jwt.JwtTokenAuthFilter;
+import foxgurev.blps.auth.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;

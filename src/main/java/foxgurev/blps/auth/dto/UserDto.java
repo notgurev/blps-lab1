@@ -1,5 +1,6 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.dto;
 
+import foxgurev.blps.auth.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

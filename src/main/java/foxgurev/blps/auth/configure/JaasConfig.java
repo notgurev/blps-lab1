@@ -1,5 +1,8 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.configure;
 
+import foxgurev.blps.auth.security.UserDetailsLoginModule;
+import foxgurev.blps.auth.security.UserRepositoryAuthorityGranter;
+import foxgurev.blps.auth.user.UserRepository;
 import lombok.var;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

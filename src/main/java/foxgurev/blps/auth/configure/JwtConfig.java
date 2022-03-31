@@ -1,5 +1,6 @@
-package foxgurev.blps.auth.theirs;
+package foxgurev.blps.auth.configure;
 
+import foxgurev.blps.auth.jwt.JwtProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
