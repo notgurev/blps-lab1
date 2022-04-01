@@ -22,7 +22,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(doNotUseGetters = true, onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(doNotUseGetters = true, onlyExplicitlyIncluded = true)
 @ToString(doNotUseGetters = true)
 public class User implements UserDetails, Persistable<Long> {
     @Id
