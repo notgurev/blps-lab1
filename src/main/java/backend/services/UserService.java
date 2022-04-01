@@ -6,7 +6,7 @@ import backend.dto.responses.LoginDto;
 import backend.dto.responses.LoginResponse;
 import backend.entities.Role;
 import backend.entities.User;
-import backend.repositories.UserRepository;
+import backend.UserRepository;
 import backend.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     public boolean checkEmailTaken(String email) {
-        return userRepository.findUserByEmail(email) != null;
+        return userRepository.findUserByEmail(email).isPresent();
     }
 
     public boolean saveUser(UserDto u) {

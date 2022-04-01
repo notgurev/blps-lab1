@@ -1,12 +1,11 @@
 package backend.security;
 
-import backend.repositories.UserRepository;
+import backend.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
 
 import java.security.Principal;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 

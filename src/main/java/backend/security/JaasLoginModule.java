@@ -1,7 +1,7 @@
 package backend.security;
 
 import backend.entities.User;
-import backend.repositories.UserRepository;
+import backend.UserRepository;
 import com.sun.security.auth.UserPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

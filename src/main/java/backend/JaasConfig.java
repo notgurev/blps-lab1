@@ -1,6 +1,5 @@
 package backend;
 
-import backend.repositories.UserRepository;
 import backend.security.JaasLoginModule;
 import backend.security.UserAuthorityGranter;
 import lombok.RequiredArgsConstructor;

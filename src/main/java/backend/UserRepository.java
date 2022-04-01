@@ -1,4 +1,4 @@
-package backend.repositories;
+package backend;
 
 import backend.entities.Role;
 import backend.entities.User;

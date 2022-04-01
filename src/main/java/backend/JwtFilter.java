@@ -1,7 +1,6 @@
-package backend.filters;
+package backend;
 
 import backend.entities.User;
-import backend.repositories.UserRepository;
 import backend.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
