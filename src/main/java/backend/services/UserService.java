@@ -1,6 +1,5 @@
 package backend.services;
 
-import backend.dto.UserMapper;
 import backend.dto.requests.LoginRequest;
 import backend.dto.requests.UserDto;
 import backend.dto.responses.LoginDto;
@@ -27,7 +26,6 @@ import org.springframework.util.ObjectUtils;
 public class UserService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
@@ -62,15 +60,12 @@ public class UserService {
 
         User user = userRepository.findUserByEmail(loginRequest.getEmail());
         ErrorEnum.AUTH_LOGIN_ERROR.throwIfFalse(!ObjectUtils.isEmpty(user));
-        ErrorEnum.AUTH_PASSWORD_ERROR.throwIfFalse(passwordEncoder.matches(loginRequest.getPassword(),
-                user.getPassword()));
-        LoginDto loginDto = userMapper.convertMemberToDto(user);
+        ErrorEnum.AUTH_PASSWORD_ERROR.throwIfFalse(passwordEncoder.matches(
+                loginRequest.getPassword(),
+                user.getPassword()
+        ));
+        LoginDto loginDto = new LoginDto(user.getId(), user.getEmail());
         String token = jwtUtil.generateToken(loginRequest.getEmail());
-        LoginResponse loginResponse = new LoginResponse(token, loginDto);
-        return loginResponse;
+        return new LoginResponse(token, loginDto);
     }
-
-    ;
-
-
 }

@@ -1,10 +1,8 @@
 package backend;
 
-import backend.dto.UserMapper;
 import backend.dto.requests.LoginRequest;
 import backend.dto.requests.UserDto;
 import backend.dto.responses.LoginResponse;
-import backend.repositories.UserRepository;
 import backend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
