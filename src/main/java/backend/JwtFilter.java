@@ -1,7 +1,6 @@
 package backend;
 
-import backend.entities.User;
-import backend.security.JwtUtil;
+import backend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

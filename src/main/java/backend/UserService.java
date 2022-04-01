@@ -1,13 +1,11 @@
-package backend.services;
+package backend;
 
 import backend.dto.requests.LoginRequest;
 import backend.dto.requests.UserDto;
 import backend.dto.responses.LoginDto;
 import backend.dto.responses.LoginResponse;
-import backend.entities.Role;
-import backend.entities.User;
-import backend.UserRepository;
-import backend.security.JwtUtil;
+import backend.entity.Role;
+import backend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

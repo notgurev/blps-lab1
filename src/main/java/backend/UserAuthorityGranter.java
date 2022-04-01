@@ -1,4 +1,4 @@
-package backend.security;
+package backend;
 
 import backend.UserRepository;
 import lombok.RequiredArgsConstructor;
