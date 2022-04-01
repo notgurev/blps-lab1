@@ -6,8 +6,6 @@ import backend.dto.responses.LoginDto;
 import backend.dto.responses.LoginResponse;
 import backend.entities.Role;
 import backend.entities.User;
-import backend.exceptions.ApplicationException;
-import backend.exceptions.ErrorEnum;
 import backend.repositories.UserRepository;
 import backend.security.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -51,20 +49,25 @@ public class UserService {
         return true;
     }
 
-    public LoginResponse login(LoginRequest loginRequest) throws ApplicationException {
+    public LoginResponse login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
 
         if (!authentication.isAuthenticated()) {
-            throw new ApplicationException(ErrorEnum.UNAUTHORIZED_EXCEPTION.createApplicationError());
+            throw new RuntimeException("Incorrect user data"); // todo exception class
         }
 
         User user = userRepository.findUserByEmail(loginRequest.getEmail()).get();
-        ErrorEnum.AUTH_LOGIN_ERROR.throwIfFalse(!ObjectUtils.isEmpty(user));
-        ErrorEnum.AUTH_PASSWORD_ERROR.throwIfFalse(passwordEncoder.matches(
-                loginRequest.getPassword(), user.getPassword()
-        ));
+
+        if (ObjectUtils.isEmpty(user)) {
+            throw new RuntimeException("Failed to find user by email"); // todo exception class
+        }
+
+        if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Incorrect password"); // todo exception class
+        }
+
         LoginDto loginDto = new LoginDto(user.getId(), user.getEmail());
         String token = jwtUtil.generateToken(loginRequest.getEmail());
         return new LoginResponse(token, loginDto);
