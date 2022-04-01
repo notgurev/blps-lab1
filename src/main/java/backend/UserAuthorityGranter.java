@@ -1,13 +1,11 @@
 package backend;
 
-import backend.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
 
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Set;
-
 
 @RequiredArgsConstructor
 public class UserAuthorityGranter implements AuthorityGranter {
