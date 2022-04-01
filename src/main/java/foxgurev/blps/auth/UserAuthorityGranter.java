@@ -1,6 +1,6 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.entity.Role;
+import foxgurev.blps.auth.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.jaas.AuthorityGranter;
 

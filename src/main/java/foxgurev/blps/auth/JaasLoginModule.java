@@ -1,7 +1,7 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.entity.User;
 import com.sun.security.auth.UserPrincipal;
+import foxgurev.blps.auth.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,7 +45,9 @@ public class JaasLoginModule implements LoginModule {
             callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
             username = nameCallback.getName();
             String password = String.valueOf(passwordCallback.getPassword());
-            User user = userRepository.findUserByEmail(username).get();
+            User user = userRepository.findUserByEmail(username).orElseThrow(
+                    () -> new RuntimeException("User not found by email")
+            );
             loginSucceeded = passwordEncoder.matches(password, user.getPassword());
         } catch (UsernameNotFoundException e) {
             log.warn("User with name = {} was not found during authentication", username);

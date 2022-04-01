@@ -1,4 +1,4 @@
-package backend.dto.responses;
+package foxgurev.blps.auth.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

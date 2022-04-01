@@ -1,4 +1,4 @@
-package backend;
+package foxgurev.blps.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

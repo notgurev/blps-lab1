@@ -1,8 +1,8 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.dto.requests.LoginRequest;
-import backend.dto.requests.UserDto;
-import backend.dto.responses.LoginResponse;
+import foxgurev.blps.auth.dto.requests.LoginRequest;
+import foxgurev.blps.auth.dto.requests.UserDto;
+import foxgurev.blps.auth.dto.responses.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

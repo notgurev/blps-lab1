@@ -1,7 +1,7 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.entity.Role;
-import backend.entity.User;
+import foxgurev.blps.auth.user.Role;
+import foxgurev.blps.auth.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

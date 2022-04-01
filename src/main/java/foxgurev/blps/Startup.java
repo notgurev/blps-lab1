@@ -1,8 +1,8 @@
 package foxgurev.blps;
 
+import foxgurev.blps.auth.UserRepository;
 import foxgurev.blps.auth.user.Role;
 import foxgurev.blps.auth.user.User;
-import foxgurev.blps.auth.user.UserRepository;
 import foxgurev.blps.product.Product;
 import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.Promocode;
@@ -57,8 +57,8 @@ public class Startup {
                 new Promocode("USKOV", 50, PromocodeStatus.INACTIVE)
         ));
 
-        userRepository.saveAll( Arrays.asList(
-            new User("user@sd.com", "username", "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
-                    "89023457654", Role.ROLE_USER)));
+        userRepository.saveAll(Arrays.asList(
+                new User("user@sd.com", "username", "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
+                        "89023457654", Role.ROLE_USER)));
     }
 }

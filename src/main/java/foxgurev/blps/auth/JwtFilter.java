@@ -1,6 +1,6 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.entity.User;
+import foxgurev.blps.auth.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

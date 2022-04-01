@@ -1,10 +1,9 @@
-package backend.dto.requests;
+package foxgurev.blps.auth.dto.requests;
 
 import lombok.Data;
 
 @Data
-public class UserDto {
+public class LoginRequest {
     private String email;
     private String password;
-    private String age;
 }

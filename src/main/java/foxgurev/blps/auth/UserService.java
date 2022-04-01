@@ -1,11 +1,11 @@
-package backend;
+package foxgurev.blps.auth;
 
-import backend.dto.requests.LoginRequest;
-import backend.dto.requests.UserDto;
-import backend.dto.responses.LoginDto;
-import backend.dto.responses.LoginResponse;
-import backend.entity.Role;
-import backend.entity.User;
+import foxgurev.blps.auth.dto.requests.LoginRequest;
+import foxgurev.blps.auth.dto.requests.UserDto;
+import foxgurev.blps.auth.dto.responses.LoginDto;
+import foxgurev.blps.auth.dto.responses.LoginResponse;
+import foxgurev.blps.auth.user.Role;
+import foxgurev.blps.auth.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,8 +37,9 @@ public class UserService {
         User user = new User(); // todo convert properly
         user.setEmail(u.getEmail());
         user.setPassword(u.getPassword());
-        user.setAge(u.getAge());
-        user.setRole(Role.USER);
+        user.setPhoneNumber(u.getPhoneNumber());
+        user.setUsername(u.getUsername());
+        user.setRole(Role.ROLE_USER);
 
         user.setPassword(passwordEncoder.encode(user.getPassword())); // todo get from dto
 
@@ -62,7 +63,7 @@ public class UserService {
             throw new RuntimeException("Failed to find user by email"); // todo exception class
         }
 
-        if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new RuntimeException("Incorrect password"); // todo exception class
         }
 
