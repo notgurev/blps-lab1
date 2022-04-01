@@ -29,21 +29,22 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public boolean checkUser(String email) {
+    public boolean checkEmailTaken(String email) {
         return userRepository.findUserByEmail(email) != null;
     }
 
-    public boolean saveMember(UserDto userDto) {
-        if (checkUser(userDto.getEmail())) {
+    public boolean saveUser(UserDto u) {
+        if (checkEmailTaken(u.getEmail())) {
             return false;
         }
+
         User user = new User(); // todo convert properly
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setAge(userDto.getAge());
+        user.setEmail(u.getEmail());
+        user.setPassword(u.getPassword());
+        user.setAge(u.getAge());
         user.setRole(Role.USER);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // todo get from dto
 
         userRepository.save(user);
 
@@ -51,8 +52,9 @@ public class UserService {
     }
 
     public LoginResponse login(LoginRequest loginRequest) throws ApplicationException {
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+        );
 
         if (!authentication.isAuthenticated()) {
             throw new ApplicationException(ErrorEnum.UNAUTHORIZED_EXCEPTION.createApplicationError());
@@ -61,8 +63,7 @@ public class UserService {
         User user = userRepository.findUserByEmail(loginRequest.getEmail());
         ErrorEnum.AUTH_LOGIN_ERROR.throwIfFalse(!ObjectUtils.isEmpty(user));
         ErrorEnum.AUTH_PASSWORD_ERROR.throwIfFalse(passwordEncoder.matches(
-                loginRequest.getPassword(),
-                user.getPassword()
+                loginRequest.getPassword(), user.getPassword()
         ));
         LoginDto loginDto = new LoginDto(user.getId(), user.getEmail());
         String token = jwtUtil.generateToken(loginRequest.getEmail());

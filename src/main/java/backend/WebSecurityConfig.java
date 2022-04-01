@@ -28,7 +28,6 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtFilter jwtFilter;
-
     private final AbstractJaasAuthenticationProvider jaasAuthenticationProvider;
 
     @Bean
@@ -37,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(jaasAuthenticationProvider);
     }
 
@@ -47,7 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         //enable CORS and disable CRSF
@@ -56,22 +54,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
         // Set unauthorized requests exception handler
         httpSecurity.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
-                    response.sendError(
-                            HttpServletResponse.SC_UNAUTHORIZED,
-                            ex.getMessage()
-                    );
-                }
-        )
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                )
                 .and();
         // Set permissions on endpoints
         httpSecurity.authorizeRequests()
-                //Доступ только для не зарегистрированных пользователей
+                // Доступ только для не зарегистрированных пользователей
                 .antMatchers(HttpMethod.GET, "/").not().fullyAuthenticated()
                 .antMatchers(HttpMethod.GET, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
-                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                //Доступ только для авторизованных пользователей
+//                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                // Доступ только для авторизованных пользователей
                 .antMatchers(HttpMethod.POST, "/**")
                 .authenticated();
         httpSecurity.headers().frameOptions().sameOrigin();

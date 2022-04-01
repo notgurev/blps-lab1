@@ -17,8 +17,7 @@ public class JwtUtil {
 
     public String generateToken(String email) {
         Date now = new Date();
-        Date exp = Date.from(LocalDateTime.now().plusHours(1)
-                .atZone(ZoneId.systemDefault()).toInstant());
+        Date exp = Date.from(LocalDateTime.now().plusHours(1).atZone(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(now)
@@ -41,5 +40,4 @@ public class JwtUtil {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
-
 }

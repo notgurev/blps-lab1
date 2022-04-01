@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController { // todo cleanup
     private final UserService userService;
 
     @RequestMapping(value = "/register", consumes = "application/json", produces = "application/json", method = {RequestMethod.OPTIONS, RequestMethod.POST})
@@ -32,10 +32,9 @@ public class AuthController {
                 return new ResponseEntity<>("Validation Error", HttpStatus.BAD_REQUEST);
             }
 
-            boolean isSaved = userService.saveMember(user);
-            System.out.println(isSaved);
+            boolean isSaved = userService.saveUser(user);
             return isSaved ? new ResponseEntity<>("User registered successfully!", HttpStatus.OK) :
-                    new ResponseEntity<>("User has already registered!", HttpStatus.BAD_REQUEST);
+                    new ResponseEntity<>("Email is taken!", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.info("Unexpected Error {}", e.getMessage());
             return new ResponseEntity<>("Validation Error", HttpStatus.BAD_REQUEST);

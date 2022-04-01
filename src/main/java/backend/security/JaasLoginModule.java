@@ -38,17 +38,15 @@ public class JaasLoginModule implements LoginModule {
     }
 
     @Override
-    public boolean login() throws LoginException {
-        String password;
-        User user;
+    public boolean login() {
         NameCallback nameCallback = new NameCallback("login");
         PasswordCallback passwordCallback = new PasswordCallback("password", false);
 
         try {
             callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
             username = nameCallback.getName();
-            password = String.valueOf(passwordCallback.getPassword());
-            user = userRepository.findUserByEmail(username);
+            String password = String.valueOf(passwordCallback.getPassword());
+            User user = userRepository.findUserByEmail(username);
             loginSucceeded = passwordEncoder.matches(password, user.getPassword());
         } catch (UsernameNotFoundException e) {
             log.warn("User with name = {} was not found during authentication", username);
@@ -57,12 +55,12 @@ public class JaasLoginModule implements LoginModule {
             log.error("Error occurred during invocation of callback handler = {}", e.getMessage());
             loginSucceeded = false;
         }
+
         return loginSucceeded;
     }
 
     @Override
     public boolean commit() throws LoginException {
-
         if (!loginSucceeded) {
             return false;
         }
@@ -75,12 +73,12 @@ public class JaasLoginModule implements LoginModule {
     }
 
     @Override
-    public boolean abort() throws LoginException {
+    public boolean abort() {
         return false;
     }
 
     @Override
-    public boolean logout() throws LoginException {
+    public boolean logout() {
         return false;
     }
 }

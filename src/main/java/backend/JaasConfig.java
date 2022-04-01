@@ -10,7 +10,6 @@ import org.springframework.security.authentication.jaas.AbstractJaasAuthenticati
 import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.authentication.jaas.DefaultJaasAuthenticationProvider;
 import org.springframework.security.authentication.jaas.memory.InMemoryConfiguration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import static javax.security.auth.login.AppConfigurationEntry.LoginModuleControl
 @Configuration
 @RequiredArgsConstructor
 public class JaasConfig {
-
     private final UserRepository userRepository;
 
     @Bean
@@ -29,25 +27,18 @@ public class JaasConfig {
         Map<String, UserRepository> options = new HashMap<>();
         options.put("userRepository", userRepository);
         AppConfigurationEntry[] configurationEntries = new AppConfigurationEntry[]{
-                new AppConfigurationEntry(
-                        JaasLoginModule.class.getCanonicalName(),
-                        REQUIRED,
-                        options)
+                new AppConfigurationEntry(JaasLoginModule.class.getCanonicalName(), REQUIRED, options)
         };
-
         Map<String, AppConfigurationEntry[]> map = new HashMap<>();
         map.put("SPRINGSECURITY", configurationEntries);
         return new InMemoryConfiguration(map);
     }
 
-
     @Bean
     public AbstractJaasAuthenticationProvider jaasAuthenticationProvider(javax.security.auth.login.Configuration configuration) {
         DefaultJaasAuthenticationProvider provider = new DefaultJaasAuthenticationProvider();
         provider.setConfiguration(configuration);
-        provider.setAuthorityGranters(
-                new AuthorityGranter[]{new UserAuthorityGranter(userRepository)});
+        provider.setAuthorityGranters(new AuthorityGranter[]{new UserAuthorityGranter(userRepository)});
         return provider;
     }
-
 }
