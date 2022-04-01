@@ -22,13 +22,11 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    @PreAuthorize("permitAll()")
     public List<Product> getProducts() {
         return productService.getProducts();
     }
 
     @GetMapping("/product/{id}")
-    @PreAuthorize("permitAll()")
     public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id).orElseThrow(() -> new VisibleException("The product doesn't exist"));
     }

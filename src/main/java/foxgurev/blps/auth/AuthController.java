@@ -7,8 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -18,7 +21,8 @@ import javax.validation.Valid;
 public class AuthController { // todo cleanup
     private final UserService userService;
 
-    @RequestMapping(value = "/register", consumes = "application/json", produces = "application/json", method = {RequestMethod.OPTIONS, RequestMethod.POST})
+    @PostMapping(value = "/register")
+//    @PreAuthorize("permitAll()")
     public ResponseEntity<String> register(@Valid @RequestBody UserDto user, BindingResult result) {
         log.debug(String.valueOf(user));
         try {
@@ -37,7 +41,8 @@ public class AuthController { // todo cleanup
         }
     }
 
-    @RequestMapping(value = "/login", consumes = "application/json", method = {RequestMethod.OPTIONS, RequestMethod.POST})
+    @PostMapping(value = "/login")
+//    @PreAuthorize("permitAll()")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
         log.debug(String.valueOf(loginRequest));
         try {

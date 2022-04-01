@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.jaas.AbstractJaasAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +25,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtFilter jwtFilter;
     private final AbstractJaasAuthenticationProvider jaasAuthenticationProvider;
@@ -61,23 +62,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .and();
         // Set permissions on endpoints
-        httpSecurity.authorizeRequests()
-                // Доступ только для не зарегистрированных пользователей
-                .antMatchers(HttpMethod.GET, "/").not().fullyAuthenticated()
-                .antMatchers(HttpMethod.GET, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/register").permitAll()
+        httpSecurity.authorizeRequests().anyRequest().permitAll();
+        // Доступ только для не зарегистрированных пользователей
+//                .antMatchers(HttpMethod.GET, "/").not().fullyAuthenticated()
+//                .antMatchers(HttpMethod.GET, "/**").permitAll()
+        // Authentication endpoints
+//                .antMatchers(HttpMethod.POST, "/login").permitAll()
+//                .antMatchers(HttpMethod.POST, "/register").permitAll()
 //                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                // Доступ только для авторизованных пользователей
-                .antMatchers(HttpMethod.POST, "/**")
-                .authenticated();
+        // Доступ только для авторизованных пользователей
+//                .antMatchers(HttpMethod.POST, "/**").authenticated()
+//                .antMatchers(HttpMethod.POST, "/**").hasRole("ROLE_USER");
+//                        .ant
         httpSecurity.headers().frameOptions().sameOrigin();
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    /**
-     * Конфигарация CORS.
-     */
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Collections.singletonList("*"));

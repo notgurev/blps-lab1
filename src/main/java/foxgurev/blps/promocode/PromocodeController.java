@@ -17,7 +17,6 @@ public class PromocodeController {
     }
 
     @GetMapping("/promocode/{code}")
-    @PreAuthorize("permitAll()")
     public Promocode getPromocode(@PathVariable String code) {
         return promocodeService.getPromocode(code).orElseThrow(() -> new VisibleException("The promocode doesn't exist"));
     }

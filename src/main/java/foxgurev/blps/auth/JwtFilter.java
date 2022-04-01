@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -28,8 +27,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (jwt != null && jwtUtil.validateToken(jwt)) {
             User user = userRepository.findUserByEmail(jwtUtil.getWordForToken(jwt)).get();
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,
-                    null, new ArrayList<>());
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
@@ -43,16 +42,4 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         return null; // todo optional
     }
-
-//    private String parseJwt(HttpServletRequest request) {
-//        String headerName = "Authorization";
-//        String prefix = "Bearer ";
-//        String headerAuth = request.getHeader(headerName);
-//
-//        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(prefix)) {
-//            return headerAuth.substring(prefix.length());
-//        }
-////        log.debug("Invalid header name or auth prefix for request to {}", request.getRequestURI());
-//        return null;
-//    }
 }
