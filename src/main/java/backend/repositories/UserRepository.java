@@ -4,11 +4,13 @@ import backend.entities.Role;
 import backend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findUserByEmail(String email);
+import java.util.Optional;
 
-    default Role findRoleByEmail(String email) {
-        User user = findUserByEmail(email);
-        return user.getRole();
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findUserByEmail(String email);
+
+    default Role findRoleByEmail(String email) { // todo not in interface -> move to service
+        Optional<User> user = findUserByEmail(email);
+        return user.get().getRole(); // todo
     }
 }

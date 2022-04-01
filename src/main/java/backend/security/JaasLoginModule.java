@@ -46,7 +46,7 @@ public class JaasLoginModule implements LoginModule {
             callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
             username = nameCallback.getName();
             String password = String.valueOf(passwordCallback.getPassword());
-            User user = userRepository.findUserByEmail(username);
+            User user = userRepository.findUserByEmail(username).get();
             loginSucceeded = passwordEncoder.matches(password, user.getPassword());
         } catch (UsernameNotFoundException e) {
             log.warn("User with name = {} was not found during authentication", username);

@@ -1,5 +1,5 @@
 package backend.filters;
-//
+
 import backend.entities.User;
 import backend.repositories.UserRepository;
 import backend.security.JwtUtil;
@@ -9,28 +9,26 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.springframework.util.StringUtils.hasText;
 
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    public static final String AUTHORIZATION = "Authorization";
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
-
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getTokenFromRequest(request);
         if (jwt != null && jwtUtil.validateToken(jwt)) {
-            User user = userRepository.findUserByEmail(jwtUtil.getWordForToken(jwt));
+            User user = userRepository.findUserByEmail(jwtUtil.getWordForToken(jwt)).get();
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,
                     null, new ArrayList<>());
@@ -41,11 +39,11 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
-        String bearer = request.getHeader(AUTHORIZATION);
+        String bearer = request.getHeader("Authorization");
         if (hasText(bearer) && bearer.startsWith("Bearer ")) {
             return bearer.substring(7);
         }
-        return null;
+        return null; // todo optional
     }
 
 //    private String parseJwt(HttpServletRequest request) {

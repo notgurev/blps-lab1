@@ -60,7 +60,7 @@ public class UserService {
             throw new ApplicationException(ErrorEnum.UNAUTHORIZED_EXCEPTION.createApplicationError());
         }
 
-        User user = userRepository.findUserByEmail(loginRequest.getEmail());
+        User user = userRepository.findUserByEmail(loginRequest.getEmail()).get();
         ErrorEnum.AUTH_LOGIN_ERROR.throwIfFalse(!ObjectUtils.isEmpty(user));
         ErrorEnum.AUTH_PASSWORD_ERROR.throwIfFalse(passwordEncoder.matches(
                 loginRequest.getPassword(), user.getPassword()
