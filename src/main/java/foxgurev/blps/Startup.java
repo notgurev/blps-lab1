@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Component
 public class Startup {
@@ -59,8 +58,13 @@ public class Startup {
                 new Promocode("USKOV", 50, PromocodeStatus.INACTIVE)
         ));
 
-        userRepository.saveAll(List.of(
-                new User("user@sd.com", "username", "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
-                        "89023457654", Role.ROLE_USER)));
+        userRepository.save(new User("user@sd.com", "username",
+                "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
+                "89023457654", Role.ROLE_USER));
+
+        userRepository.save(new User("admin@sd.com", "admin",
+                "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
+                "88005555555",
+                Role.ROLE_ADMIN));
     }
 }

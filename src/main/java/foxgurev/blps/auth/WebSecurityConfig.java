@@ -63,17 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and();
         // Set permissions on endpoints
         httpSecurity.authorizeRequests().anyRequest().permitAll();
-        // Доступ только для не зарегистрированных пользователей
-//                .antMatchers(HttpMethod.GET, "/").not().fullyAuthenticated()
-//                .antMatchers(HttpMethod.GET, "/**").permitAll()
-        // Authentication endpoints
-//                .antMatchers(HttpMethod.POST, "/login").permitAll()
-//                .antMatchers(HttpMethod.POST, "/register").permitAll()
-//                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-        // Доступ только для авторизованных пользователей
-//                .antMatchers(HttpMethod.POST, "/**").authenticated()
-//                .antMatchers(HttpMethod.POST, "/**").hasRole("ROLE_USER");
-//                        .ant
         httpSecurity.headers().frameOptions().sameOrigin();
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
