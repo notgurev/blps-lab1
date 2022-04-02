@@ -1,6 +1,7 @@
 package foxgurev.blps.auth;
 
 import foxgurev.blps.auth.user.User;
+import foxgurev.blps.exceptions.VisibleException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
