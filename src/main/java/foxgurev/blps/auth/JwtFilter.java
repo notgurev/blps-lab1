@@ -1,7 +1,6 @@
 package foxgurev.blps.auth;
 
 import foxgurev.blps.auth.user.User;
-import foxgurev.blps.exceptions.VisibleException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,16 +28,15 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         String jwt = getTokenFromRequest(request).orElseThrow(() -> new RuntimeException("No token in request"));
-        if (!jwtUtil.tokenIsValid(jwt)) {
-            throw new RuntimeException("Invalid token");
+        if (jwtUtil.tokenIsValid(jwt)) {
+            String email = jwtUtil.subjectFromToken(jwt);
+            User user = userRepository.findUserByEmail(email).orElseThrow(
+                    () -> new RuntimeException("Failed to find user by email")
+            );
+            SecurityContextHolder.getContext().setAuthentication(
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
+            );
         }
-        String email = jwtUtil.subjectFromToken(jwt);
-        User user = userRepository.findUserByEmail(email).orElseThrow(
-                () -> new RuntimeException("Failed to find user by email")
-        );
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities())
-        );
         filterChain.doFilter(request, response);
     }
 
