@@ -27,9 +27,9 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        String jwt = getTokenFromRequest(request).orElseThrow(() -> new RuntimeException("No token in request"));
-        if (jwtUtil.tokenIsValid(jwt)) {
-            String email = jwtUtil.subjectFromToken(jwt);
+        Optional<String> optionalJwt = getTokenFromRequest(request);
+        if (optionalJwt.isPresent() && jwtUtil.tokenIsValid(optionalJwt.get())) {
+            String email = jwtUtil.subjectFromToken(optionalJwt.get());
             User user = userRepository.findUserByEmail(email).orElseThrow(
                     () -> new RuntimeException("Failed to find user by email")
             );
@@ -42,6 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private Optional<String> getTokenFromRequest(HttpServletRequest request) {
         String bearer = request.getHeader("Authorization");
+        if (bearer == null) return Optional.empty();
         return bearer.startsWith("Bearer ") ? Optional.of(bearer.substring(7)) : Optional.empty();
     }
 }

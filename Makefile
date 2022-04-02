@@ -19,3 +19,6 @@ clean:
 
 run:
 	java -jar target/blps.jar
+
+deploy:
+	scp -P 2222 ./target/blps.jar s286528@se.ifmo.ru:.
