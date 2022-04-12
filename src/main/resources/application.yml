@@ -4,7 +4,7 @@ spring:
     default: dev
   datasource:
     username: s286528
-    password: npe290
+    password: 
     driverClassName: org.postgresql.Driver
 
   jpa:
