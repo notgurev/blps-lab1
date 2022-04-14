@@ -1,2 +1,0 @@
-spring.datasource.url: jdbc:postgresql://pg:5432/studs # helios
-server.error.include-stacktrace: never

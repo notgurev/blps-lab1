@@ -1,16 +1,19 @@
+server:
+  error:
+    include-stacktrace: always
 spring:
-  profiles:
-    active: @spring.profiles.active@
-    default: dev
+  #  profiles:
+  #    default: dev
   datasource:
-    username: s286528
-    password: npe290
+    url: jdbc:postgresql://postgres:5432/postgres
+    username: postgres
+    password: MARKOV
     driverClassName: org.postgresql.Driver
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-#            ddl-auto: update
+      #ddl-auto: update
       ddl-auto: create
     generate-ddl: true
     database: postgresql
