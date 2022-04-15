@@ -1,7 +1,14 @@
-FROM java:8-jdk
+FROM maven:3.5-jdk-8 AS build
 
-COPY . .
+COPY pom.xml .
+RUN mvn dependency:resolve
 
-CMD ./mvnw package
+COPY src src
+RUN mvn package
 
-ENTRYPOINT java -jar target/blps.jar
+# я хз почему тут зависимости скачиваются каждый раз, не получается нормально сделать :(
+
+FROM openjdk:8-jre-slim
+COPY --from=build target/blps.jar blps.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","blps.jar"]

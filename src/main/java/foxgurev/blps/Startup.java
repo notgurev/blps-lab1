@@ -25,8 +25,8 @@ public class Startup {
     private final PromocodeRepository promocodeRepository;
     private final UserRepository userRepository;
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
+//    @Value("${spring.profiles.active}")
+//    private String activeProfile = "placeholder"; // todo
 
     private final Logger logger = LoggerFactory.getLogger(Startup.class);
 
@@ -40,12 +40,14 @@ public class Startup {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void init() {
-        logger.info("Active profile: " + activeProfile);
+//        logger.info("Active profile: " + activeProfile);
 
         if (productRepository.count() > 0) {
             logger.info("Already initialized, skipping adding initial entities");
             return;
         }
+
+        logger.info("Adding initial entities...");
 
         productRepository.saveAll(Arrays.asList(
                 new Product("Набор для шитья", 100, 1000),
@@ -66,5 +68,7 @@ public class Startup {
                 "$2b$12$CekwqWUxTHJKKCa8qEAOo.8pyOhGMMjdKDoBceMqAAp4/2TEAdr2.",
                 "88005555555",
                 Role.ROLE_ADMIN));
+
+        logger.info("Successfully added initial entities");
     }
 }

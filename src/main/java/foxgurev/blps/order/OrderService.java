@@ -9,6 +9,7 @@ import foxgurev.blps.product.ProductService;
 import foxgurev.blps.promocode.InactivePromocodeException;
 import foxgurev.blps.promocode.Promocode;
 import foxgurev.blps.promocode.PromocodeService;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class OrderService {
         this.productService = productService;
     }
 
+    @SneakyThrows
     public Long createOrder(OrderCreationRequest ocr) {
         Optional<Promocode> opc = promocodeService.getPromocode(ocr.promocode);
         Promocode promocode = opc.orElseThrow(InactivePromocodeException::new);

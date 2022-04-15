@@ -2,10 +2,8 @@ server:
   error:
     include-stacktrace: always
 spring:
-  #  profiles:
-  #    default: dev
   datasource:
-    url: jdbc:postgresql://postgres:5432/postgres
+    url: jdbc:postgresql://db:5432/postgres
     username: postgres
     password: MARKOV
     driverClassName: org.postgresql.Driver
@@ -13,10 +11,22 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      #ddl-auto: update
-      ddl-auto: create
+      ddl-auto: update
+    #      ddl-auto: create
     generate-ddl: true
     database: postgresql
+
+  kafka:
+    consumer:
+      bootstrap-servers: 'kafka:9092'
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: 'kafka:9092'
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 token:
   jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw

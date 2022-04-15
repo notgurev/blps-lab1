@@ -5,13 +5,14 @@ services:
     container_name: backend
     build: .
     depends_on:
+      - db
       - kafka
-      - zookeeper
-      - postgres
     networks:
       - app
+    ports:
+      - "8080:8080"
 
-  postgres:
+  db:
     container_name: postgres
     image: postgres
     environment:
@@ -20,22 +21,38 @@ services:
       - "5432:5432"
     networks:
       - app
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   kafka:
     container_name: kafka
     image: bitnami/kafka
     depends_on:
       - zookeeper
+    environment:
+      ALLOW_PLAINTEXT_LISTENER: 'yes'
+      KAFKA_CFG_ZOOKEEPER_CONNECT: 'zookeeper:2181'
     networks:
       - app
+    volumes:
+      - kafka_data:/bitnami/kafka
 
   zookeeper:
     container_name: zookeeper
     image: bitnami/zookeeper
     networks:
       - app
-
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: 'yes'
+    volumes:
+      - zookeeper_data:/bitnami/zookeeper
 
 networks:
   app:
     driver: bridge
+
+volumes:
+  backend_data:
+  kafka_data:
+  zookeeper_data:
+  postgres_data:
