@@ -1,9 +1,10 @@
 version: '3'
 
 services:
-  backend:
-    container_name: backend
-    build: .
+  main-service:
+    build:
+      context: main-service
+      dockerfile: ../Dockerfile
     depends_on:
       - db
       - kafka
@@ -12,8 +13,16 @@ services:
     ports:
       - "8080:8080"
 
+  greeting-service:
+    build:
+      context: greeting-service
+      dockerfile: ../Dockerfile
+    depends_on:
+      - kafka
+    networks:
+      - app
+
   db:
-    container_name: postgres
     image: postgres
     environment:
       POSTGRES_PASSWORD: MARKOV
@@ -25,7 +34,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   kafka:
-    container_name: kafka
     image: bitnami/kafka
     depends_on:
       - zookeeper
@@ -38,7 +46,6 @@ services:
       - kafka_data:/bitnami/kafka
 
   zookeeper:
-    container_name: zookeeper
     image: bitnami/zookeeper
     networks:
       - app

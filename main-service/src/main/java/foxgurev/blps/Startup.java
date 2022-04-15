@@ -8,10 +8,8 @@ import foxgurev.blps.product.ProductRepository;
 import foxgurev.blps.promocode.Promocode;
 import foxgurev.blps.promocode.PromocodeRepository;
 import foxgurev.blps.promocode.PromocodeStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -20,15 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 @Component
+@Slf4j
 public class Startup {
     private final ProductRepository productRepository;
     private final PromocodeRepository promocodeRepository;
     private final UserRepository userRepository;
-
-//    @Value("${spring.profiles.active}")
-//    private String activeProfile = "placeholder"; // todo
-
-    private final Logger logger = LoggerFactory.getLogger(Startup.class);
 
     @Autowired
     public Startup(ProductRepository productRepository, PromocodeRepository promocodeRepository, UserRepository userRepository) {
@@ -40,14 +34,12 @@ public class Startup {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void init() {
-//        logger.info("Active profile: " + activeProfile);
-
         if (productRepository.count() > 0) {
-            logger.info("Already initialized, skipping adding initial entities");
+            log.info("Already initialized, skipping adding initial entities");
             return;
         }
 
-        logger.info("Adding initial entities...");
+        log.info("Adding initial entities...");
 
         productRepository.saveAll(Arrays.asList(
                 new Product("Набор для шитья", 100, 1000),
@@ -69,6 +61,6 @@ public class Startup {
                 "88005555555",
                 Role.ROLE_ADMIN));
 
-        logger.info("Successfully added initial entities");
+        log.info("Successfully added initial entities");
     }
 }
