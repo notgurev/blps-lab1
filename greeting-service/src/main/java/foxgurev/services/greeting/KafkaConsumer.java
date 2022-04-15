@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumer {
     @KafkaListener(id = "greeting-service", topics = "new-mailing-list-entries")
     public void listen(String in) {
-        log.info(in);
+        log.info("Greetings, " + in + "!");
     }
 }

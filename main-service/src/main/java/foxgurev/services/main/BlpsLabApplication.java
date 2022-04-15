@@ -8,6 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class BlpsLabApplication {
     public static void main(String[] args) {
-        SpringApplication.run(foxgurev.greeting.BlpsLabApplication.class, args);
+        SpringApplication.run(BlpsLabApplication.class, args);
     }
 }

@@ -6,15 +6,15 @@ import java.util.Map;
 public class MapBuilder {
     Map<String, Object> map = new LinkedHashMap<>();
 
-    public static foxgurev.greeting.util.MapBuilder map() {
-        return new foxgurev.greeting.util.MapBuilder();
+    public static MapBuilder map() {
+        return new MapBuilder();
     }
 
-    public static foxgurev.greeting.util.MapBuilder map(String key, Object value) {
-        return new foxgurev.greeting.util.MapBuilder().put(key, value);
+    public static MapBuilder map(String key, Object value) {
+        return new MapBuilder().put(key, value);
     }
 
-    public foxgurev.greeting.util.MapBuilder put(String key, Object value) {
+    public MapBuilder put(String key, Object value) {
         map.put(key, value);
         return this;
     }

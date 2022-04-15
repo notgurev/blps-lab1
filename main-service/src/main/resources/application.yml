@@ -17,16 +17,10 @@ spring:
     database: postgresql
 
   kafka:
-    consumer: # todo remove
-      bootstrap-servers: 'kafka:9092'
-      group-id: group_id
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # todo json
     producer:
       bootstrap-servers: 'kafka:9092'
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer # todo json
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 token:
   jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-import static foxgurev.greeting.util.MapBuilder.map;
+import static foxgurev.services.main.util.MapBuilder.map;
 
 @RestController
 @Slf4j
