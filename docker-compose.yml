@@ -4,7 +4,7 @@ services:
   main-service:
     build:
       context: main-service
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     depends_on:
       - db
       - kafka
@@ -16,7 +16,7 @@ services:
   greeting-service:
     build:
       context: greeting-service
-      dockerfile: ../Dockerfile
+      dockerfile: Dockerfile
     depends_on:
       - kafka
     networks:
