@@ -15,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Slf4j
 @Service
@@ -70,5 +73,9 @@ public class UserService {
         LoginDto loginDto = new LoginDto(user.getId(), user.getEmail());
         String token = jwtUtil.generateToken(loginRequest.getEmail());
         return new LoginResponse(token, loginDto);
+    }
+
+    public List<String> getAllEmails() {
+        return userRepository.findAll().stream().map(User::getEmail).collect(Collectors.toList());
     }
 }
