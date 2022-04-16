@@ -3,6 +3,7 @@ version: '3'
 services:
   main-service:
     container_name: main-service
+    restart: always
     build:
       context: main-service
       dockerfile: Dockerfile
@@ -17,6 +18,7 @@ services:
 
   greeting-service:
     container_name: greeting-service
+    restart: always
     build:
       context: greeting-service
       dockerfile: Dockerfile
