@@ -16,10 +16,10 @@ public class GreetingQueue {
     private final KafkaTemplate<String, String> template;
     private final static String topic = "new-mailing-list-entries";
 
-    @Bean
-    public NewTopic topic() {
-        return TopicBuilder.name(topic).partitions(2).replicas(1).build();
-    }
+//    @Bean
+//    public NewTopic topic() {
+//        return TopicBuilder.name(topic).partitions(2).replicas(1).build();
+//    }
 
     @Autowired
     public GreetingQueue(KafkaTemplate<String, String> template) {

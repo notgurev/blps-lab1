@@ -43,6 +43,8 @@ services:
     environment:
       ALLOW_PLAINTEXT_LISTENER: 'yes'
       KAFKA_CFG_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ADVERTISED_HOST_NAME: 'kafka'
     networks:
       - app
     volumes:
