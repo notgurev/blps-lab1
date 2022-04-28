@@ -1,6 +1,6 @@
 package foxgurev.services.main.auth;
 
-import foxgurev.services.main.KafkaMessage;
+import foxgurev.common.KafkaMessage;
 import foxgurev.services.main.auth.dto.requests.LoginRequest;
 import foxgurev.services.main.auth.dto.requests.UserDto;
 import foxgurev.services.main.auth.dto.responses.LoginResponse;
@@ -23,15 +23,14 @@ import static org.springframework.http.ResponseEntity.status;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
-    //    private final Producer kafkaProducer;
-    final KafkaTemplate kafkaTemplate;
+    final KafkaTemplate<String, KafkaMessage> kafkaTemplate;
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserDto user) {
         log.info("POST request to register user {}", user);
         boolean ok = userService.saveUser(user);
         if (ok) {
-            kafkaTemplate.send("transaction-1", new KafkaMessage(user.getEmail(), user.hashCode()));
+            kafkaTemplate.send("greetings", new KafkaMessage(user.getEmail(), 444));
             return status(OK).body("User registered successfully!");
         }
         return status(BAD_REQUEST).body("Email is taken!");

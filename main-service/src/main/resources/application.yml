@@ -4,7 +4,7 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: MARKOV
     driverClassName: org.postgresql.Driver
@@ -17,7 +17,10 @@ spring:
     database: postgresql
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 token:
   jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw
