@@ -1,39 +1,15 @@
 version: '3'
 
 services:
-  main-service:
-    container_name: main-service
-    restart: always
-    build:
-      context: main-service
-      dockerfile: Dockerfile
-    depends_on:
-      - db
-      - kafka
-      - greeting-service
-    networks:
-      - app
-    ports:
-      - "8080:8080"
-
-  greeting-service:
-    container_name: greeting-service
-    restart: always
-    build:
-      context: greeting-service
-      dockerfile: Dockerfile
-    depends_on:
-      - kafka
-    networks:
-      - app
-
-  db:
-    container_name: db
+  postgres:
+    container_name: postgres
     image: postgres
     environment:
       POSTGRES_PASSWORD: MARKOV
+    ports:
+      - '5432:5432'
     networks:
-      - app
+      - blps
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -48,28 +24,27 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_ADVERTISED_HOST_NAME: 'kafka'
     networks:
-      - app
+      - blps
     volumes:
       - kafka_data:/bitnami/kafka
     ports:
-      - "9092:9092"
+      - '9092:9092'
 
   zookeeper:
     container_name: zookeeper
     image: bitnami/zookeeper
     networks:
-      - app
+      - blps
     environment:
       ALLOW_ANONYMOUS_LOGIN: 'yes'
     volumes:
       - zookeeper_data:/bitnami/zookeeper
 
 networks:
-  app:
+  blps:
     driver: bridge
 
 volumes:
-  backend_data:
   kafka_data:
   zookeeper_data:
   postgres_data:

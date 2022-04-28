@@ -4,11 +4,7 @@ server:
   port: 8081
 spring:
   kafka:
-    bootstrap-servers: 'kafka:9092'
     consumer:
-      group-id: greetings
+      group-id: group-1
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    admin:
-      fail-fast: true
+      bootstrap-servers: localhost:9092

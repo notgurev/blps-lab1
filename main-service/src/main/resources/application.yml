@@ -17,12 +17,7 @@ spring:
     database: postgresql
 
   kafka:
-    bootstrap-servers: 'kafka:9092'
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    admin:
-      fail-fast: true
+    bootstrap-servers: localhost:9092
 
 token:
   jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw
