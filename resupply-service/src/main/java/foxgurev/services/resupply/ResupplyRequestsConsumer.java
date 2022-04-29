@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class ResupplyRequestsConsumer {
     private final ResupplyService resupplyService;
 
-    @KafkaListener(topics = "resupply", groupId = "resupply-group")
+    @KafkaListener(topics = "resupply")
     public void listenToMessage(ProductSupply ps) {
         log.info("Accepted product resupply request: id = {}, amount = {}", ps.getProductID(), ps.getAmount());
         resupplyService.add(ps);

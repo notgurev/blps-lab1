@@ -1,7 +1,6 @@
 package foxgurev.services.main;
 
 import foxgurev.common.SuppliesArrivalNotification;
-import foxgurev.services.main.product.ProductRepository;
 import foxgurev.services.main.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +22,7 @@ public class SuppliesArrivalNotificationListener {
             productService.getProduct(productSupply.getProductID()).ifPresent(product -> {
                 log.info("Saving to stock: id = {}, amount = {}", product.getId(), productSupply.getAmount());
                 product.changeAmountInStock((int) productSupply.getAmount());
+                product.setMarkedForResupply(false);
             });
         });
     }

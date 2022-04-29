@@ -34,18 +34,6 @@ public class OrderService {
 
     private final KafkaTemplate<String, ProductSupply> productSupplyQueue;
 
-//    @Autowired
-//    public OrderService(OrderRepository orderRepository, PromocodeService promocodeService,
-//                        ProductRepository productRepository, DeliveryService deliveryService,
-//                        ProductService productService, KafkaTemplate<String, ProductSupply> kafkaTemplate) {
-//        this.orderRepository = orderRepository;
-//        this.promocodeService = promocodeService;
-//        this.productRepository = productRepository;
-//        this.deliveryService = deliveryService;
-//        this.productService = productService;
-//        this.kafkaTemplate = kafkaTemplate;
-//    }
-
     @SneakyThrows
     public Long createOrder(OrderCreationRequest ocr) {
         Optional<Promocode> opc = promocodeService.getPromocode(ocr.promocode);
@@ -58,7 +46,7 @@ public class OrderService {
             if (inStock <= p.getWatermark() && !p.getMarkedForResupply()) {
                 p.setMarkedForResupply(true);
                 log.info("Marked product with id = {} for resupply", p.getId());
-                productSupplyQueue.send("resupply", new ProductSupply(p.getId(), p.getWatermark() * 3L));
+                productSupplyQueue.send("resupply", new ProductSupply(p.getId(), 1));
             }
         });
 
