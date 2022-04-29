@@ -42,9 +42,9 @@ public class Startup {
         log.info("Adding initial entities...");
 
         productRepository.saveAll(Arrays.asList(
-                new Product("Набор для шитья", 100, 1000),
-                new Product("Пластилин", 250, 2000),
-                new Product("Полимерная глина", 150, 500)
+                new Product("Набор для шитья", 100, 1000, 999),
+                new Product("Пластилин", 250, 2000, 200),
+                new Product("Полимерная глина", 150, 500, 499)
         ));
 
         promocodeRepository.saveAll(Arrays.asList(

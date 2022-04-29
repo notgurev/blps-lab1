@@ -12,7 +12,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     generate-ddl: true
     database: postgresql
 
@@ -21,6 +21,19 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    consumer:
+      group-id: supply-arrival-notification-group
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9093
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
 
 token:
   jwtSecret: ja5XKcJV478PZ7z91ILt0EYlHieM4clnKzwW1ZdKw

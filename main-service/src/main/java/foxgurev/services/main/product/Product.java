@@ -25,14 +25,23 @@ public class Product {
     @Column
     private Integer inStock;
 
-    public Product(String name, Integer price, Integer inStock) {
+    @Column
+    private Integer watermark;
+
+    @Column
+    private Boolean markedForResupply;
+
+    public Product(String name, Integer price, Integer inStock, Integer watermark) {
         this.name = name;
         this.price = price;
         this.inStock = inStock;
+        this.watermark = watermark;
+        this.markedForResupply = false;
     }
 
-    public void changeAmountInStock(int delta) {
-        if (inStock == 0) throw new RuntimeException("No amount of product left in stock");
+    public int changeAmountInStock(int delta) {
+        if (inStock == 0 && delta < 0) throw new RuntimeException("No amount of product left in stock");
         inStock += delta;
+        return inStock;
     }
 }

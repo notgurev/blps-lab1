@@ -1,13 +1,15 @@
-package foxgurev.services.greeting;
+package foxgurev.services.resupply;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableKafka
-public class GreetingServiceApplication {
+@EnableScheduling
+public class ResupplyServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GreetingServiceApplication.class, args);
+        SpringApplication.run(ResupplyServiceApplication.class, args);
     }
 }

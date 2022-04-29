@@ -1,5 +1,6 @@
 package foxgurev.services.main.order;
 
+import foxgurev.common.ProductSupply;
 import foxgurev.services.main.delivery.Delivery;
 import foxgurev.services.main.delivery.DeliveryService;
 import foxgurev.services.main.exceptions.VisibleException;
@@ -9,10 +10,10 @@ import foxgurev.services.main.product.ProductService;
 import foxgurev.services.main.promocode.InactivePromocodeException;
 import foxgurev.services.main.promocode.Promocode;
 import foxgurev.services.main.promocode.PromocodeService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
+@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final PromocodeService promocodeService;
@@ -29,16 +32,19 @@ public class OrderService {
     private final DeliveryService deliveryService;
     private final ProductService productService;
 
-    private final Logger logger = LoggerFactory.getLogger(OrderService.class);
+    private final KafkaTemplate<String, ProductSupply> productSupplyQueue;
 
-    @Autowired
-    public OrderService(OrderRepository orderRepository, PromocodeService promocodeService, ProductRepository productRepository, DeliveryService deliveryService, ProductService productService) {
-        this.orderRepository = orderRepository;
-        this.promocodeService = promocodeService;
-        this.productRepository = productRepository;
-        this.deliveryService = deliveryService;
-        this.productService = productService;
-    }
+//    @Autowired
+//    public OrderService(OrderRepository orderRepository, PromocodeService promocodeService,
+//                        ProductRepository productRepository, DeliveryService deliveryService,
+//                        ProductService productService, KafkaTemplate<String, ProductSupply> kafkaTemplate) {
+//        this.orderRepository = orderRepository;
+//        this.promocodeService = promocodeService;
+//        this.productRepository = productRepository;
+//        this.deliveryService = deliveryService;
+//        this.productService = productService;
+//        this.kafkaTemplate = kafkaTemplate;
+//    }
 
     @SneakyThrows
     public Long createOrder(OrderCreationRequest ocr) {
@@ -47,7 +53,14 @@ public class OrderService {
 
         List<Product> products = productRepository.findAllById(ocr.getProducts());
 
-        products.forEach(p -> p.changeAmountInStock(-1));
+        products.forEach(p -> {
+            int inStock = p.changeAmountInStock(-1);
+            if (inStock <= p.getWatermark() && !p.getMarkedForResupply()) {
+                p.setMarkedForResupply(true);
+                log.info("Marked product with id = {} for resupply", p.getId());
+                productSupplyQueue.send("resupply", new ProductSupply(p.getId(), p.getWatermark() * 3L));
+            }
+        });
 
         Integer sum = products.stream().map(Product::getPrice).reduce(Integer::sum).orElseThrow(() -> {
             throw new RuntimeException("Failed to calculate sum of order");
