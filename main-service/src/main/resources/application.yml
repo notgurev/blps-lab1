@@ -21,6 +21,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 2
 
     consumer:
       group-id: supply-arrival-notification-group
